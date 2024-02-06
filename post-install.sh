@@ -4,12 +4,6 @@ set -e
 
 ./config.sh
 
-# Dotfiles
-sudo pacman --noconfirm -S git stow
-git clone git@github.com:drjole/dotfiles.git ~/.dotfiles
-cd ~/.dotfiles
-stow .
-
 # Install yay
 git clone https://aur.archlinux.org/yay.git /tmp/yay
 cd /tmp/yay
@@ -18,7 +12,7 @@ makepkg --noconfirm -si
 # Install applications and tools from the official repositories
 sudo pacman --noconfirm -S \
   bat cmake dunst eza fzf htop ripgrep starship tmux zsh-completions \
-  xorg xorg-xinit xclip xdotool maim acpilight numlockx plymouth xss-lock \
+  xorg xorg-xinit xclip xdotool maim numlockx plymouth xss-lock \
   i3 i3lock i3status-rust dex picom \
   network-manager-applet redshift python-gobject \
   kvantum ttf-liberation noto-fonts noto-fonts-emoji \
@@ -29,7 +23,7 @@ sudo pacman --noconfirm -S \
 # Docker
 sudo pacman --noconfirm -S docker docker-compose
 sudo systemctl enable --now docker
-sudo usermod -a -G docker jole
+sudo usermod -a -G docker $USERNAME
 
 # Ruby
 yay --noconfirm -S rbenv ruby-build
@@ -65,3 +59,12 @@ sudo grub-mkconfig -o /boot/grub/grub.cfg
 yay --noconfirm -S plymouth-theme-catppuccin-mocha-git
 sudo sed -i '/^HOOKS=(/s/base/base plymouth/' /etc/mkinitcpio.conf
 sudo mkinitcpio -P
+
+# Automatic login
+cat <<EOF >/etc/systemd/system/getty@tty1.service.d/autologin.conf
+[Service]
+Type=idle
+ExecStart=
+ExecStart=-/usr/bin/agetty --skip-login --nonewline --noissue --autologin $USERNAME --noclear %I \$TERM
+Environment=XDG_SESSION_TYPE=x11
+EOF
