@@ -53,6 +53,9 @@ passwd root
 
 Connect to the machine using SSH from another machine. Use `ip addr` to get the IP address of the machine.
 
+Continue the rest of this guide using SSH from your other machine and run the commands over SSH.
+Don't forget to reconnect after a reboot.
+
 ## Partition the Disks
 
 Use `lsblk` to identify your disks.
