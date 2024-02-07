@@ -15,22 +15,26 @@ sudo pacman --noconfirm -S \
   xorg xorg-xinit xclip xdotool maim numlockx plymouth xss-lock \
   i3 i3lock i3status-rust dex picom \
   network-manager-applet redshift python-gobject \
-  kvantum ttf-liberation noto-fonts noto-fonts-emoji \
-  alacritty firefox keepassxc nextcloud-client obsidian signal-desktop spotify-launcher vlc \
+  kvantum ttf-liberation noto-fonts noto-fonts-emoji hicolor-icon-theme papirus-icon-theme \
+  alacritty firefox nextcloud-client obsidian signal-desktop spotify-launcher vlc \
   pipewire pipewire-audio pipewire-alsa pipewire-pulse pipewire-jack \
-  go gopls lazygit lua-language-server mariadb-libs mkcert nodejs npm pre-commit prettier python-lsp-server shfmt rustup texlab yaml-language-server
+  go gopls lazygit lua-language-server nodejs npm prettier python-lsp-server shfmt rustup texlab yaml-language-server
 
 # Docker
 sudo pacman --noconfirm -S docker docker-compose
 sudo systemctl enable --now docker
 sudo usermod -a -G docker $USERNAME
 
-# Ruby
+# reditus
+sudo pacman --noconfirm -S mariadb-libs mkcert pre-commit keepassxc
 yay --noconfirm -S rbenv ruby-build
 rbenv install 3.1.4
 rbenv global 3.1.4
 rbenv rehash
-gem install solargraph solargraph-rails solargraph-standardrb
+gem install solargraph solargraph-rails solargraph-rails-patch-for-rails71
+# Inside ~/code/reditus/intern:
+# bundle
+# yard gems
 
 # Rust
 rustup default stable
@@ -47,14 +51,12 @@ sudo systemctl enable greetd
 sudo pacman --noconfirm -S syncthing
 systemctl --user enable --now syncthing
 
-# Catppuccin
-yay --noconfirm -S catppuccin-gtk-theme-mocha catppuccin-cursors-mocha kvantum-theme-catppuccin-git
-
+# Theming
+yay --noconfirm -S catppuccin-gtk-theme-mocha catppuccin-cursors-mocha kvantum-theme-catppuccin-git qt5-styleplugins
 # Catppuccin GRUB
 yay --noconfirm -S catppuccin-mocha-grub-theme-git
 sudo cp -r /usr/share/grub/themes/catppuccin-mocha /boot/grub/themes/
 sudo grub-mkconfig -o /boot/grub/grub.cfg
-
 # Catppuccin Plymouth
 yay --noconfirm -S plymouth-theme-catppuccin-mocha-git
 sudo sed -i '/^HOOKS=(/s/base/base plymouth/' /etc/mkinitcpio.conf
