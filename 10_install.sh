@@ -6,22 +6,22 @@ set -e
 # This script assumes that the disks are already partitioned and that the system is connected to the internet. #
 ################################################################################################################
 
-./config.sh
+./00_config.sh
 
 # Encrypt the root partition and open it after encryption
 modprobe dm-crypt
 modprobe dm-mod
-echo -n "$ROOT_PARTITION_PASSWORD" | cryptsetup luksFormat -v -s 512 -h sha512 "$ROOT_PARTITION" -
-echo -n "$ROOT_PARTITION_PASSWORD" | cryptsetup open "$ROOT_PARTITION" luks_lvm -
+echo -n "$ARCH_INSTALL_ROOT_PARTITION_PASSWORD" | cryptsetup luksFormat -v -s 512 -h sha512 "$ARCH_INSTALL_ROOT_PARTITION" -
+echo -n "$ARCH_INSTALL_ROOT_PARTITION_PASSWORD" | cryptsetup open "$ARCH_INSTALL_ROOT_PARTITION" luks_lvm -
 
 # Create the LVM physical volume, volume group and logical volumes
 pvcreate /dev/mapper/luks_lvm
 vgcreate arch /dev/mapper/luks_lvm
-lvcreate -n swap -L "$SWAP_SIZE" -C y arch
+lvcreate -n swap -L "$ARCH_INSTALL_SWAP_SIZE" -C y arch
 lvcreate -n root -l +100%FREE arch
 
 # Format the logical volumes
-mkfs.fat -F32 "$BOOT_PARTITION"
+mkfs.fat -F32 "$ARCH_INSTALL_BOOT_PARTITION"
 mkfs.ext4 /dev/mapper/arch-root
 mkswap /dev/mapper/arch-swap
 
@@ -31,7 +31,7 @@ swapon -a
 
 # Mount the root and boot partitions
 mount /dev/mapper/arch-root /mnt
-mount --mkdir "$BOOT_PARTITION" /mnt/boot
+mount --mkdir "$ARCH_INSTALL_BOOT_PARTITION" /mnt/boot
 
 # Install the base system
 pacstrap -K /mnt base linux linux-firmware
@@ -43,7 +43,7 @@ genfstab -U -p /mnt >/mnt/etc/fstab
 arch-chroot /mnt /bin/bash
 
 # Install some essential packages
-pacman -S base-devel grub efibootmgr lvm2 "$MICROCODE" git neovim zsh networkmanager
+pacman --noconfirm -S base-devel grub efibootmgr lvm2 "$ARCH_INSTALL_MICROCODE" git neovim zsh networkmanager
 
 # Configure the initial ramdisk
 sed -i '/^HOOKS=(/s/block/block encrypt lvm2/' /etc/mkinitcpio.conf
@@ -54,7 +54,7 @@ mkinitcpio -P
 grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=GRUB
 
 # Setup the GRUB_CMDLINE_LINUX_DEFAULT line in /etc/default/grub
-ROOT_PARTITION_UUID=$(blkid -s UUID -o value "$ROOT_PARTITION")
+ROOT_PARTITION_UUID=$(blkid -s UUID -o value "$ARCH_INSTALL_ROOT_PARTITION")
 SWAP_PARTITION_UUID=$(blkid -s UUID -o value /dev/mapper/arch-swap)
 KERNEL_PARAMS="quiet splash loglevel=3 vt.global_cursor_default=0 udev.log_level=3 sysrq_always_enabled=1"
 KERNEL_PARAMS="$KERNEL_PARAMS root=/dev/mapper/arch-root"
@@ -80,14 +80,14 @@ locale-gen
 localectl set-locale LANG=en_US.UTF-8
 
 # Set the hostname
-echo "$HOSTNAME" >/etc/hostname
+echo "$ARCH_INSTALL_HOSTNAME" >/etc/hostname
 
 # Set the root password
-echo "$ROOT_PASSWORD" | passwd --stdin root
+echo "$ARCH_INSTALL_ROOT_PASSWORD" | passwd --stdin root
 
 # Create a new user
-useradd -m -G wheel -s /bin/zsh "$USERNAME"
-echo "$USER_PASSWORD" | passwd --stdin "$USERNAME"
+useradd -m -G wheel -s /bin/zsh "$ARCH_INSTALL_USERNAME"
+echo "$ARCH_INSTALL_USER_PASSWORD" | passwd --stdin "$ARCH_INSTALL_USERNAME"
 
 # Allow members of the wheel group to execute any command
 sed -i 's/# %wheel ALL=(ALL:ALL) ALL/%wheel ALL=(ALL:ALL) ALL' /etc/sudoers

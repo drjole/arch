@@ -2,14 +2,12 @@
 
 set -e
 
-./config.sh
+./00_config.sh
 
-sudo pacman -S acpilight
-
-cat <<EOF >/etc/udev/rules.d/90-backlight.rules
+sudo pacman --noconfirm -S acpilight
+sudo usermod -aG video "$ARCH_INSTALL_USERNAME"
+sudo cat <<EOF >/etc/udev/rules.d/90-backlight.rules
 SUBSYSTEM=="backlight", ACTION=="add", \
   RUN+="/bin/chgrp video /sys/class/backlight/%k/brightness", \
   RUN+="/bin/chmod g+w /sys/class/backlight/%k/brightness"
 EOF
-
-sudo usermod -a -G video "$USERNAME"

@@ -96,12 +96,12 @@ These are my partition layouts:
 
 ## Install the Base System
 
-Adjust the values in `config.sh`.
+Adjust the values in `00_config.sh`.
 
 Then run the install script:
 
 ```shell
-./install.sh
+./10-install.sh
 ```
 
 After this script has finished executing, reboot:
@@ -110,10 +110,16 @@ After this script has finished executing, reboot:
 reboot
 ```
 
-Select the newly installed system in GRUB, log in using your defined credentials and download the dotfiles:
+Select the newly installed system in GRUB, log in using your defined credentials.
+
+**Only run scripts as your newly created user from now on! The scripts might ask you for the sudo password.**
+
+First, transfer your SSH keys to your new machine.
+
+Then, download the dotfiles:
 
 ```shell
-./dotfiles
+./20-dotfiles
 ```
 
 Log out of the system:
@@ -125,14 +131,7 @@ exit
 Now log back in and execute the post-install script:
 
 ```shell
-./post-install.sh
+./30-post-install.sh
 ```
 
-Finally, run any of these scripts, as desired:
-
-```shell
-amd.sh
-nvidia.sh
-bluetooth.sh
-backlight.sh
-```
+Finally, run any of the remaining scripts, as desired.

@@ -8,4 +8,4 @@ if [ "$(id -u)" -ne 0 ]; then
 fi
 
 # Install the AMD drivers
-pacman -S mesa xf86-video-amdgpu
+pacman --noconfirm -S mesa xf86-video-amdgpu
