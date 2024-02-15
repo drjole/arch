@@ -74,3 +74,11 @@ ExecStart=
 ExecStart=-/usr/bin/agetty --skip-login --nonewline --noissue --autologin $ARCH_INSTALL_USERNAME --noclear %I \$TERM
 Environment=XDG_SESSION_TYPE=x11
 EOF
+
+# Dotfiles
+sudo pacman --noconfirm -S stow
+git clone https://github.com/drjole/dotfiles ~/.dotfiles
+cd ~/.dotfiles
+# Create directories so that stow does not create symlinks to the top level directories
+find . -mindepth 1 -maxdepth 1 -type d -not -name .git -printf "%f\n" | xargs -I {} mkdir -p "$HOME"/{}
+stow .

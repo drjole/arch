@@ -131,24 +131,16 @@ If GRUB is not shown, refer to [this article](https://wiki.archlinux.org/title/G
 
 **Only run scripts as your newly created user from now on! The scripts might ask you for the sudo password.**
 
-First, transfer your SSH keys to your new machine.
-
-Then, download the dotfiles:
+Execute the post-install script:
 
 ```shell
-./20-dotfiles
+./20-post-install.sh
 ```
 
 Log out of the system:
 
 ```shell
 exit
-```
-
-Now log back in and execute the post-install script:
-
-```shell
-./30-post-install.sh
 ```
 
 Finally, run any of the remaining scripts, as desired.
