@@ -153,3 +153,12 @@ exit
 ```
 
 Finally, run any of the remaining scripts, as desired.
+
+## Additional Steps
+
+- Add previous SSH keys.
+  - Make sure to `chmod 600` the private key.
+- Change origin of dotfiles repository to use SSH.
+- Setup catppuccin in Firefox using [this](https://github.com/catppuccin/firefox). I use the lavender flavor.
+- Setup catppuccin in Dark Reader using [this](https://github.com/catppuccin/dark-reader).
+- Adjust the `nvidia-settings` command in `~/.xinitrc` according to [this](https://wiki.archlinux.org/title/NVIDIA#Using_nvidia-settings).
