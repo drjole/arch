@@ -40,6 +40,7 @@ yay --noconfirm -S rbenv ruby-build
 rbenv install 3.1.4
 rbenv global 3.1.4
 rbenv rehash
+eval "$(rbenv init - zsh)"
 gem install solargraph solargraph-rails \
   solargraph-rails-patch-for-rails71 # solargraph does not work well with Rails 7.1
 
@@ -49,7 +50,7 @@ rustup default stable
 # LSPs
 sudo pacman --noconfirm -S gopls lua-language-server prettier python-lsp-server shfmt texlab yaml-language-server
 rustup component add rust-analyzer
-npm install -g dockerfile-language-server-nodejs stimulus-language-server
+npm install -g --prefix ~/.local dockerfile-language-server-nodejs stimulus-language-server
 
 # Syncthing
 sudo pacman --noconfirm -S syncthing
@@ -68,6 +69,7 @@ sudo sed -i '/^HOOKS=(/s/base/base plymouth/' /etc/mkinitcpio.conf
 sudo mkinitcpio -P
 
 # Automatic login
+sudo mkdir -p /etc/systemd/system/getty@tty1.service.d
 sudo cat <<EOF >/etc/systemd/system/getty@tty1.service.d/autologin.conf
 [Service]
 Type=idle
@@ -83,3 +85,5 @@ cd ~/.dotfiles
 # Create directories so that stow does not create symlinks to the top level directories
 find . -mindepth 1 -maxdepth 1 -type d -not -name .git -printf "%f\n" | xargs -I {} mkdir -p "$HOME"/{}
 stow .
+
+echo "Now reboot the system"
