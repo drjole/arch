@@ -16,7 +16,7 @@ sudo pacman --noconfirm -S bat eza fzf htop lazygit ripgrep starship tmux zsh-co
 sudo pacman --noconfirm -S xorg xorg-xinit xclip xdotool
 
 # Window manager related packages
-sudo pacman --noconfirm -S dex dunst i3 i3lock i3status-rust maim numlockx picom xss-lock
+sudo pacman --noconfirm -S dex dunst i3 i3lock i3status-rust maim numlockx picom rofi xss-lock
 
 # Graphical applications
 sudo pacman --noconfirm -S alacritty firefox network-manager-applet nextcloud-client obsidian redshift signal-desktop spotify-launcher vlc \
@@ -86,5 +86,8 @@ cd ~/.dotfiles
 # Create directories so that stow does not create symlinks to the top level directories
 find . -mindepth 1 -maxdepth 1 -type d -not -name .git -printf "%f\n" | xargs -I {} mkdir -p "$HOME"/{}
 stow .
+
+# Final steps
+bat cache --build
 
 echo "Now reboot the system"

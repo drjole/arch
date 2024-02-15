@@ -8,7 +8,7 @@ if [ "$(id -u)" -ne 0 ]; then
 fi
 
 # Install the NVIDIA drivers
-pacman --noconfirm -S mesa nvidia
+pacman --noconfirm -S mesa nvidia nvidia-settings
 
 # Remove the kms hook from the initramfs
 sed -i '/^HOOKS=(/s/ kms//' /etc/mkinitcpio.conf
