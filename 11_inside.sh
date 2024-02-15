@@ -28,6 +28,7 @@ grub-mkconfig -o /boot/grub/grub.cfg
 
 # Install a microcode package
 pacman --noconfirm -S "$ARCH_INSTALL_MICROCODE"
+grub-mkconfig -o /boot/grub/grub.cfg
 
 # Set the timezone
 ln -sf /usr/share/zoneinfo/Europe/Berlin /etc/localtime
