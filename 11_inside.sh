@@ -11,7 +11,7 @@ sed -i '/^HOOKS=(/s/filesystems/filesystems resume/' /etc/mkinitcpio.conf
 
 # Install some essential packages
 # This will also rebuild the initial ramdisk
-pacman --noconfirm -S base-devel grub efibootmgr lvm2 "$ARCH_INSTALL_MICROCODE" git neovim zsh networkmanager
+pacman --noconfirm -S base-devel grub efibootmgr lvm2 git neovim zsh networkmanager
 
 # Install GRUB
 grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=GRUB --recheck
@@ -25,6 +25,9 @@ KERNEL_PARAMS="$KERNEL_PARAMS cryptdevice=UUID=$ROOT_PARTITION_UUID:luks_lvm"
 KERNEL_PARAMS="$KERNEL_PARAMS resume=UUID=$SWAP_PARTITION_UUID"
 sed -i "s|GRUB_CMDLINE_LINUX_DEFAULT=\"loglevel=3 quiet\"|GRUB_CMDLINE_LINUX_DEFAULT=\"$KERNEL_PARAMS\"|" /etc/default/grub
 grub-mkconfig -o /boot/grub/grub.cfg
+
+# Install a microcode package
+pacman --noconfirm -S "$ARCH_INSTALL_MICROCODE"
 
 # Set the timezone
 ln -sf /usr/share/zoneinfo/Europe/Berlin /etc/localtime
