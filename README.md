@@ -30,6 +30,8 @@ and run
 sudo dd if=archlinux-x86_64.iso of="$INSTALLATION_MEDIUM" bs=4M status="progress"
 ```
 
+In your BIOS settings, make sure to disable secure boot.
+
 Now boot the Arch ISO Live Environment using the installation medium.
 
 ## Connect to the Internet
