@@ -39,11 +39,12 @@ pacstrap -K /mnt base linux linux-firmware
 # Generate the fstab file
 genfstab -U -p /mnt >/mnt/etc/fstab
 
-# Chroot into the new system
-# First copy the 11_inside.sh script and 00_config.sh to the new system
+# Chroot into the new system and continue from inside
 cp ./11_inside.sh /mnt/11_inside.sh
 cp ./00_config.sh /mnt/00_config.sh
 arch-chroot /mnt /bin/bash /mnt/11_inside.sh
+rm /mnt/11_inside.sh
+rm /mnt/00_config.sh
 
 # Unmount the partitions and reboot
 umount -R /mnt
