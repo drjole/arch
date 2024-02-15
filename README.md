@@ -129,6 +129,15 @@ Select the newly installed system in GRUB, log in using your defined credentials
 
 If GRUB is not shown, refer to [this article](https://wiki.archlinux.org/title/GRUB/EFI_examples#MSI) for help.
 
+Again, obtain the install scripts:
+
+```shell
+git clone https://github.com/drjole/arch
+cd arch
+```
+
+The values in `00_config.sh` can be left unchanged as they are not needed for the post-install scripts.
+
 **Only run scripts as your newly created user from now on! The scripts might ask you for the sudo password.**
 
 Execute the post-install script:

@@ -31,7 +31,7 @@ sudo pacman --noconfirm -S cmake go nodejs npm rustup
 # Docker
 sudo pacman --noconfirm -S docker docker-compose
 sudo systemctl enable --now docker
-sudo usermod -a -G docker $ARCH_INSTALL_USERNAME
+sudo usermod -a -G docker $USER
 
 # reditus
 sudo pacman --noconfirm -S mariadb-libs mkcert pre-commit keepassxc
@@ -71,7 +71,7 @@ sudo cat <<EOF >/etc/systemd/system/getty@tty1.service.d/autologin.conf
 [Service]
 Type=idle
 ExecStart=
-ExecStart=-/usr/bin/agetty --skip-login --nonewline --noissue --autologin $ARCH_INSTALL_USERNAME --noclear %I \$TERM
+ExecStart=-/usr/bin/agetty --skip-login --nonewline --noissue --autologin $USER --noclear %I \$TERM
 Environment=XDG_SESSION_TYPE=x11
 EOF
 
