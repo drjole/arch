@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e
+
 source /00_config.sh
 
 # Install some essential packages
