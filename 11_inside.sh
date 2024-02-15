@@ -1,6 +1,6 @@
 #!/bin/bash
 
-source /mnt/00_config.sh
+source /00_config.sh
 
 # Install some essential packages
 pacman --noconfirm -S base-devel grub efibootmgr lvm2 "$ARCH_INSTALL_MICROCODE" git neovim zsh networkmanager

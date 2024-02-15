@@ -42,7 +42,7 @@ genfstab -U -p /mnt >/mnt/etc/fstab
 # Chroot into the new system and continue from inside
 cp ./11_inside.sh /mnt/11_inside.sh
 cp ./00_config.sh /mnt/00_config.sh
-arch-chroot /mnt /bin/bash /mnt/11_inside.sh
+arch-chroot /mnt /bin/bash /11_inside.sh
 rm /mnt/11_inside.sh
 rm /mnt/00_config.sh
 
