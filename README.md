@@ -103,6 +103,7 @@ These are my partition layouts:
 The easiest way to obtain the scripts is by installing Git in the live environment and cloning this repository:
 
 ```shell
+pacman-key --init
 pacman -Sy git
 git clone https://github.com/drjole/arch
 cd arch

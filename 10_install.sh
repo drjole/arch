@@ -48,4 +48,5 @@ rm /mnt/00_config.sh
 
 # Unmount the partitions and reboot
 umount -R /mnt
-reboot
+
+echo "Now reboot the system"
