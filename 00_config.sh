@@ -1,5 +1,3 @@
-echo "Setting up configuration"
-
 # Set to the correct values
 export ARCH_INSTALL_BOOT_PARTITION="/dev/nvme0n1p1"
 export ARCH_INSTALL_ROOT_PARTITION="/dev/nvme0n1p2"
