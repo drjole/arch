@@ -45,14 +45,14 @@ echo "LANG=en_US.UTF-8" >/etc/locale.conf
 echo "$ARCH_INSTALL_HOSTNAME" >/etc/hostname
 
 # Set the root password
-echo "$ARCH_INSTALL_ROOT_PASSWORD" | passwd --stdin root
+echo -e "$ARCH_INSTALL_ROOT_PASSWORD\n$ARCH_INSTALL_ROOT_PASSWORD" | passwd root
 
 # Create a new user
 useradd -m -G wheel -s /bin/zsh "$ARCH_INSTALL_USERNAME"
-echo "$ARCH_INSTALL_USER_PASSWORD" | passwd --stdin "$ARCH_INSTALL_USERNAME"
+echo -e "$ARCH_INSTALL_USER_PASSWORD\n$ARCH_INSTALL_USER_PASSWORD" | passwd "$ARCH_INSTALL_USERNAME"
 
 # Allow members of the wheel group to execute any command
-sed -i 's/# %wheel ALL=(ALL:ALL) ALL/%wheel ALL=(ALL:ALL) ALL' /etc/sudoers
+sed -i 's/# %wheel ALL=(ALL:ALL) ALL/%wheel ALL=(ALL:ALL) ALL/' /etc/sudoers
 
 # Enable NetworkManager
 systemctl enable NetworkManager
