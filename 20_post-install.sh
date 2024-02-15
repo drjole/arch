@@ -23,7 +23,8 @@ sudo pacman --noconfirm -S alacritty firefox network-manager-applet nextcloud-cl
   python-gobject # python-gobject is required for redshift for some reason
 
 # Audio
-sudo pacman --noconfirm -S pipewire pipewire-audio pipewire-alsa pipewire-pulse pipewire-jack
+sudo pacman --noconfirm -S pipewire pipewire-audio pipewire-alsa pipewire-pulse
+yes | sudo pacman --noconfirm -S pipewire-jack
 
 # Programming languages
 sudo pacman --noconfirm -S cmake go nodejs npm rustup
