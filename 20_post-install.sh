@@ -62,6 +62,7 @@ yay --noconfirm -S catppuccin-cursors-mocha catppuccin-gtk-theme-mocha kvantum-t
 # Catppuccin GRUB
 yay --noconfirm -S catppuccin-mocha-grub-theme-git
 sudo cp -r /usr/share/grub/themes/catppuccin-mocha /boot/grub/themes/
+sudo sed -i '/#GRUB_THEME/aGRUB_THEME="/boot/grub/themes/catppuccin-mocha/theme.txt"' /etc/default/grub
 sudo grub-mkconfig -o /boot/grub/grub.cfg
 # Catppuccin Plymouth
 yay --noconfirm -S plymouth-theme-catppuccin-mocha-git
@@ -70,7 +71,7 @@ sudo mkinitcpio -P
 
 # Automatic login
 sudo mkdir -p /etc/systemd/system/getty@tty1.service.d
-sudo cat <<EOF >/etc/systemd/system/getty@tty1.service.d/autologin.conf
+cat <<EOF | sudo tee /etc/systemd/system/getty@tty1.service.d/autologin.conf >/dev/null
 [Service]
 Type=idle
 ExecStart=
