@@ -1,5 +1,7 @@
 # Installation Guide
 
+The installation scripts are not idempotent and therefore produce different results if executed multiple times.
+
 ## Obtain the Arch ISO
 
 Download the Arch Linux ISO using the instructions from the [download page](https://archlinux.org/download/).

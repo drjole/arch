@@ -22,7 +22,7 @@ KERNEL_PARAMS="quiet splash loglevel=3 vt.global_cursor_default=0 udev.log_level
 KERNEL_PARAMS="$KERNEL_PARAMS root=/dev/mapper/arch-root"
 KERNEL_PARAMS="$KERNEL_PARAMS cryptdevice=UUID=$ROOT_PARTITION_UUID:luks_lvm"
 KERNEL_PARAMS="$KERNEL_PARAMS resume=UUID=$SWAP_PARTITION_UUID"
-sed -i "s|GRUB_CMDLINE_LINUX_DEFAULT=\"loglevel=3 quiet\"|GRUB_CMDLINE_LINUX_DEFAULT=\"$KERNEL_PARAMS\"|"
+sed -i "s|GRUB_CMDLINE_LINUX_DEFAULT=\"loglevel=3 quiet\"|GRUB_CMDLINE_LINUX_DEFAULT=\"$KERNEL_PARAMS\"|" /etc/default/grub
 grub-mkconfig -o /boot/grub/grub.cfg
 
 # Set the timezone
