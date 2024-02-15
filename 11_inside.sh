@@ -2,18 +2,19 @@
 
 set -e
 
+# Load the configuration from the root directory inside the new system
 source /00_config.sh
-
-# Install some essential packages
-pacman --noconfirm -S base-devel grub efibootmgr lvm2 "$ARCH_INSTALL_MICROCODE" git neovim zsh networkmanager
 
 # Configure the initial ramdisk
 sed -i '/^HOOKS=(/s/block/block encrypt lvm2/' /etc/mkinitcpio.conf
 sed -i '/^HOOKS=(/s/filesystems/filesystems resume/' /etc/mkinitcpio.conf
-mkinitcpio -P
+
+# Install some essential packages
+# This will also rebuild the initial ramdisk
+pacman --noconfirm -S base-devel grub efibootmgr lvm2 "$ARCH_INSTALL_MICROCODE" git neovim zsh networkmanager
 
 # Install GRUB
-grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=GRUB
+grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=GRUB --recheck
 
 # Setup the GRUB_CMDLINE_LINUX_DEFAULT line in /etc/default/grub
 ROOT_PARTITION_UUID=$(blkid -s UUID -o value "$ARCH_INSTALL_ROOT_PARTITION")

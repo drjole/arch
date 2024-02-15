@@ -98,6 +98,16 @@ These are my partition layouts:
 | 1         | default      | +512M       | EF00         | EFI (/boot)        |
 | 2         | default      | default     | 8309         | / (LUKS encrypted) |
 
+## Obtain the installation scripts
+
+The easiest way to obtain the scripts is by installing Git in the live environment and cloning this repository:
+
+```shell
+pacman -Sy git
+git clone https://github.com/drjole/arch
+cd arch
+```
+
 ## Install the Base System
 
 Adjust the values in `00_config.sh`.
