@@ -57,7 +57,7 @@ sudo pacman --noconfirm -S syncthing
 systemctl --user enable --now syncthing
 
 # Theming
-sudo pacman --noconfirm -S hicolor-icon-theme kvantum noto-fonts noto-fonts-emoji papirus-icon-theme plymouth ttf-liberation
+sudo pacman --noconfirm -S hicolor-icon-theme kvantum ttf-jetbrains-mono-nerd noto-fonts noto-fonts-emoji papirus-icon-theme plymouth ttf-liberation
 yay --noconfirm -S catppuccin-cursors-mocha catppuccin-gtk-theme-mocha kvantum-theme-catppuccin-git qt5-styleplugins
 # Catppuccin GRUB
 yay --noconfirm -S catppuccin-mocha-grub-theme-git
@@ -81,7 +81,7 @@ EOF
 
 # Dotfiles
 sudo pacman --noconfirm -S stow
-git clone https://github.com/drjole/dotfiles ~/.dotfiles
+git clone --recurse-submodules https://github.com/drjole/dotfiles ~/.dotfiles
 cd ~/.dotfiles
 # Create directories so that stow does not create symlinks to the top level directories
 find . -mindepth 1 -maxdepth 1 -type d -not -name .git -printf "%f\n" | xargs -I {} mkdir -p "$HOME"/{}
