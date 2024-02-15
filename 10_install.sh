@@ -6,7 +6,7 @@ set -e
 # This script assumes that the disks are already partitioned and that the system is connected to the internet. #
 ################################################################################################################
 
-source 00_config.sh
+source ./00_config.sh
 
 # Encrypt the root partition and open it after encryption
 modprobe dm-crypt

@@ -2,7 +2,7 @@
 
 set -e
 
-source 00_config.sh
+source ./00_config.sh
 
 # yay
 git clone https://aur.archlinux.org/yay.git /tmp/yay

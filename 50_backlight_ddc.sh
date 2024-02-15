@@ -2,7 +2,7 @@
 
 set -e
 
-source 00_config.sh
+source ./00_config.sh
 
 sudo pacman --noconfirm -S ddcutil
 sudo usermod -aG i2c $ARCH_INSTALL_USERNAME
