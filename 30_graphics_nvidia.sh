@@ -19,7 +19,8 @@ sed -i '/^MODULES=(/s/)/ nvidia nvidia_modeset nvidia_uvm nvidia_drm)/' /etc/mki
 # Set the DRM kernel mode setting kernel parameter
 sed -i '/^GRUB_CMDLINE_LINUX_DEFAULT=/s/"$/ nvidia-drm.modeset=1"/' /etc/default/grub
 
-# Regenerate the initramfs
+# Regenerate the initramfs and the GRUB configuration
 mkinitcpio -P
+grub-mkconfig -o /boot/grub/grub.cfg
 
 echo "Now reboot the system to load the NVIDIA drivers."
