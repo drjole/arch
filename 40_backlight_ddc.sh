@@ -2,10 +2,8 @@
 
 set -e
 
-source ./00_config.sh
-
 sudo pacman --noconfirm -S ddcutil
 sudo usermod -aG i2c $USER
-sudo cat <<EOF >/etc/modules-load.d/i2c-dev.conf
+cat <<EOF | sudo tee /etc/modules-load.d/i2c-dev.conf >/dev/null
 i2c-dev
 EOF
