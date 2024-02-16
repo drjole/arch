@@ -13,6 +13,12 @@ pacman --noconfirm -S mesa nvidia
 # Remove the kms hook from the initramfs
 sed -i '/^HOOKS=(/s/ kms//' /etc/mkinitcpio.conf
 
+# Add the nvidia modules to the initramfs
+sed -i '/^MODULES=(/s/)/ nvidia nvidia_modeset nvidia_uvm nvidia_drm)/' /etc/mkinitcpio.conf
+
+# Set the DRM kernel mode setting kernel parameter
+sed -i '/^GRUB_CMDLINE_LINUX_DEFAULT=/s/"$/ nvidia-drm.modeset=1"/' /etc/default/grub
+
 # Regenerate the initramfs
 mkinitcpio -P
 
