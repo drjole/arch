@@ -4,6 +4,12 @@ set -e
 
 source ./00_config.sh
 
+# Enable parallel downloads in pacman
+sudo sed -i '/^#ParallelDownloads/s/#//' /etc/pacman.conf
+
+# Enable multi-threading in makepkg and set it to use all available cores
+sudo sed -i "/^MAKEFLAGS=/cMAKEFLAGS=\"-j$(nproc)\"" /etc/makepkg.conf
+
 # yay
 git clone https://aur.archlinux.org/yay.git /tmp/yay
 cd /tmp/yay
