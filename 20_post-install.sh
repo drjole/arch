@@ -73,6 +73,8 @@ sudo grub-mkconfig -o /boot/grub/grub.cfg
 # Catppuccin Plymouth
 yay --noconfirm -S plymouth-theme-catppuccin-mocha-git
 sudo sed -i '/^HOOKS=(/s/base/base plymouth/' /etc/mkinitcpio.conf
+sudo sed -i '/^#\[Daemon\]/s/#//' /etc/plymouth/plymouthd.conf
+sudo sed -i '/^#Theme=/cTheme=catppuccin-mocha' /etc/plymouth/plymouthd.conf
 sudo mkinitcpio -P
 
 # Automatic login
