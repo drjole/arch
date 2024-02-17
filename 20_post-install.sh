@@ -65,6 +65,8 @@ systemctl --user enable --now syncthing
 # Theming
 sudo pacman --noconfirm -S hicolor-icon-theme kvantum ttf-jetbrains-mono-nerd noto-fonts noto-fonts-emoji papirus-icon-theme plymouth ttf-liberation
 yay --noconfirm -S catppuccin-cursors-mocha catppuccin-gtk-theme-mocha kvantum-theme-catppuccin-git qt5-styleplugins
+# Catppuccin TTY
+sudo sed -i '/^GRUB_CMDLINE_LINUX_DEFAULT=/s/"$/ vt.default_red=30,243,166,249,137,245,148,186,88,243,166,249,137,245,148,166 vt.default_grn=30,139,227,226,180,194,226,194,91,139,227,226,180,194,226,173 vt.default_blu=46,168,161,175,250,231,213,222,112,168,161,175,250,231,213,200"/' /etc/default/grub
 # Catppuccin GRUB
 yay --noconfirm -S catppuccin-mocha-grub-theme-git
 sudo cp -r /usr/share/grub/themes/catppuccin-mocha /boot/grub/themes/
