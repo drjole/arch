@@ -25,7 +25,7 @@ sudo pacman --noconfirm -S xorg xorg-xinit xclip xdotool
 sudo pacman --noconfirm -S dex dunst i3 i3lock i3status-rust maim numlockx picom rofi xss-lock
 
 # Graphical applications
-sudo pacman --noconfirm -S alacritty firefox network-manager-applet nextcloud-client obsidian redshift signal-desktop spotify-launcher vlc \
+sudo pacman --noconfirm -S alacritty firefox network-manager-applet nextcloud-client obsidian pavucontrol redshift signal-desktop spotify-launcher vlc \
   python-gobject # python-gobject is required for redshift for some reason
 
 # Audio
