@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 ################################################################################################################
 # This script assumes that the disks are already partitioned and that the system is connected to the internet. #
