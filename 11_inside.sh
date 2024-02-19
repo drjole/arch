@@ -2,15 +2,15 @@
 
 set -e
 
-# Load the configuration from the root directory inside the new system
+# Load the configuration from the root directory inside the new system (note the missing dot before the slash)
 source /00_config.sh
 
-# Configure the initial ramdisk
+# Configure the initramfs
 sed -i '/^HOOKS=(/s/block/block encrypt lvm2/' /etc/mkinitcpio.conf
 sed -i '/^HOOKS=(/s/filesystems/filesystems resume/' /etc/mkinitcpio.conf
 
 # Install some essential packages
-# This will also rebuild the initial ramdisk
+# This will also rebuild the initramfs
 pacman --noconfirm -S base-devel grub efibootmgr lvm2 git neovim zsh networkmanager
 
 # Install GRUB
@@ -24,7 +24,6 @@ KERNEL_PARAMS="$KERNEL_PARAMS root=/dev/mapper/arch-root"
 KERNEL_PARAMS="$KERNEL_PARAMS cryptdevice=UUID=$ROOT_PARTITION_UUID:luks_lvm"
 KERNEL_PARAMS="$KERNEL_PARAMS resume=UUID=$SWAP_PARTITION_UUID"
 sed -i "s|GRUB_CMDLINE_LINUX_DEFAULT=\"loglevel=3 quiet\"|GRUB_CMDLINE_LINUX_DEFAULT=\"$KERNEL_PARAMS\"|" /etc/default/grub
-grub-mkconfig -o /boot/grub/grub.cfg
 
 # Install a microcode package
 pacman --noconfirm -S "$ARCH_INSTALL_MICROCODE"

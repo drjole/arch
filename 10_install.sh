@@ -1,10 +1,10 @@
 #!/bin/sh
 
-set -e
-
 ################################################################################################################
 # This script assumes that the disks are already partitioned and that the system is connected to the internet. #
 ################################################################################################################
+
+set -e
 
 source ./00_config.sh
 
