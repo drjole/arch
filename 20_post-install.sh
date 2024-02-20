@@ -114,15 +114,20 @@ sudo grub-mkconfig -o /boot/grub/grub.cfg
 # Bat
 bat cache --build
 
-# Automatic login
-sudo mkdir -p /etc/systemd/system/getty@tty1.service.d
-cat <<EOF | sudo tee /etc/systemd/system/getty@tty1.service.d/autologin.conf >/dev/null
-[Service]
-Type=idle
-ExecStart=
-ExecStart=-/usr/bin/agetty --skip-login --nonewline --noissue --autologin $USER --noclear %I \$TERM
-Environment=XDG_SESSION_TYPE=x11
-EOF
+# Automatic unlocking of GNOME keyring
+awk '
+{
+    if ($1 == "auth") auth_line=NR;
+    if ($1 == "session") session_line=NR;
+    file[NR]=$0
+}
+END {
+    for (i=1; i<=NR; i++) {
+        if (i == auth_line) print file[i] "\nauth       optional     pam_gnome_keyring.so";
+        else if (i == session_line) print file[i] "\nsession    optional     pam_gnome_keyring.so auto_start";
+        else print file[i];
+    }
+}' /etc/pam.d/login >/tmp/temp_file && sudo mv /tmp/temp_file /etc/pam.d/login
 
 # Dotfiles
 git clone --recurse-submodules https://github.com/drjole/dotfiles ~/.dotfiles
