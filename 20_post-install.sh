@@ -21,57 +21,8 @@ git clone https://aur.archlinux.org/yay.git /tmp/yay
 cd /tmp/yay
 makepkg --noconfirm -si
 
-pacman_packages=(
-  # Terminal/shell tools
-  bat eza fzf htop lazygit ripgrep starship stow tmux zsh-completions
-
-  # Xorg related packages
-  xorg xorg-xinit xclip xdotool
-
-  # Audio
-  pipewire pipewire-audio pipewire-alsa pipewire-pulse pipewire-jack
-
-  # Window manager related packages
-  dex dunst i3 i3lock i3status-rust maim numlockx picom rofi xss-lock
-
-  # Desktop applications
-  alacritty discord firefox network-manager-applet nextcloud-client obsidian pavucontrol redshift signal-desktop spotify-launcher syncthing vlc
-  # python-gobject is required for redshift for some reason
-  python-gobject
-
-  # Theming
-  hicolor-icon-theme kvantum ttf-jetbrains-mono-nerd noto-fonts noto-fonts-emoji papirus-icon-theme plymouth ttf-liberation
-
-  # Programming languages
-  cmake go jdk11-openjdk nodejs npm rustup
-
-  # LSPs
-  gopls lua-language-server prettier python-lsp-server shfmt texlab yaml-language-server
-
-  # Docker
-  docker docker-compose
-
-  # reditus
-  mariadb-libs mkcert pre-commit keepassxc
-)
-
-yay_packages=(
-  # Theming
-  catppuccin-cursors-mocha catppuccin-gtk-theme-mocha kvantum-theme-catppuccin-git qt5-styleplugins
-
-  # Catppuccin GRUB
-  catppuccin-mocha-grub-theme-git
-
-  # Catppuccin Plymouth
-  plymouth-theme-catppuccin-mocha-git
-
-  # reditus
-  rbenv ruby-build
-)
-
 # Install all the tools
-sudo pacman --noconfirm -S "${packages[@]}"
-yay --noconfirm -S "${yay_packages[@]}"
+./install_packages.sh
 
 # Docker
 sudo systemctl enable --now docker

@@ -1,0 +1,14 @@
+# Theming
+catppuccin-cursors-mocha
+catppuccin-gtk-theme-mocha
+catppuccin-mocha-grub-theme-git
+kvantum-theme-catppuccin-git
+plymouth-theme-catppuccin-mocha-git
+qt5-styleplugins
+
+# Desktop applications
+zotero
+
+# reditus
+rbenv
+ruby-build
