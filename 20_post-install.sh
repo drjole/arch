@@ -22,7 +22,7 @@ cd /tmp/yay
 makepkg --noconfirm -si
 
 # Install all the tools
-./install_packages.sh
+./install_packages.sh --noconfirm
 
 # Docker
 sudo systemctl enable --now docker
