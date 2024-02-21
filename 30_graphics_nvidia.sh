@@ -11,7 +11,7 @@ while true; do
 done 2>/dev/null &
 
 # Install the NVIDIA drivers
-sudo pacman --noconfirm -S mesa nvidia
+sudo pacman --noconfirm -S mesa nvidia nvidia-settings
 
 # Remove the kms hook from the initramfs
 sudo sed -i '/^HOOKS=(/s/ kms//' /etc/mkinitcpio.conf
