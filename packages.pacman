@@ -67,12 +67,12 @@ ttf-liberation
 # Programming languages
 cmake
 go
-jdk11-openjdk
+jdk17-openjdk
 nodejs
 npm
 rustup
 
-# LSPs
+# Language servers
 gopls
 lua-language-server
 prettier

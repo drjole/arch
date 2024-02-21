@@ -6,6 +6,9 @@ kvantum-theme-catppuccin-git
 plymouth-theme-catppuccin-mocha-git
 qt5-styleplugins
 
+# Language servers
+jdtls
+
 # Desktop applications
 zotero
 
