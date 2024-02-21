@@ -35,7 +35,7 @@ pacman_packages=(
   dex dunst i3 i3lock i3status-rust maim numlockx picom rofi xss-lock
 
   # Desktop applications
-  alacritty firefox network-manager-applet nextcloud-client obsidian pavucontrol redshift signal-desktop spotify-launcher syncthing vlc
+  alacritty discord firefox network-manager-applet nextcloud-client obsidian pavucontrol redshift signal-desktop spotify-launcher syncthing vlc
   # python-gobject is required for redshift for some reason
   python-gobject
 
