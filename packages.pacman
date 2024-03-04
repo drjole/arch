@@ -5,6 +5,7 @@ fzf
 htop
 inetutils
 lazygit
+networkmanager-openconnect
 ripgrep
 starship
 stow
@@ -69,6 +70,8 @@ ttf-liberation
 cmake
 go
 jdk17-openjdk
+openjdk17-doc
+openjdk17-src
 nodejs
 npm
 rustup
