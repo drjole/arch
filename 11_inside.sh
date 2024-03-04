@@ -40,8 +40,8 @@ sed -i '/^FallbackNTP=/s/^FallbackNTP=.*$/FallbackNTP=0.pool.ntp.org 1.pool.ntp.
 systemctl enable systemd-timesyncd
 
 # Setup locales
-sed -i 's/#en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen
-sed -i 's/#de_DE.UTF-8 UTF-8/de_DE.UTF-8 UTF-8/' /etc/locale.gen
+sed -i '/^#en_US.UTF-8 UTF-8/s/^#//' /etc/locale.gen
+sed -i '/^#de_DE.UTF-8 UTF-8/s/^#//' /etc/locale.gen
 locale-gen
 echo "LANG=en_US.UTF-8" >/etc/locale.conf
 
@@ -56,7 +56,7 @@ useradd -m -G wheel -s /bin/zsh "$ARCH_INSTALL_USERNAME"
 echo -e "$ARCH_INSTALL_USER_PASSWORD\n$ARCH_INSTALL_USER_PASSWORD" | passwd "$ARCH_INSTALL_USERNAME"
 
 # Allow members of the wheel group to execute any command
-sed -i 's/# %wheel ALL=(ALL:ALL) ALL/%wheel ALL=(ALL:ALL) ALL/' /etc/sudoers
+sed -i '/^# %wheel ALL=(ALL:ALL) ALL/s/^#//' /etc/sudoers
 
 # Enable NetworkManager
 systemctl enable NetworkManager

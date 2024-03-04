@@ -11,7 +11,7 @@ while true; do
 done 2>/dev/null &
 
 # Enable parallel downloads in pacman
-sudo sed -i '/^#ParallelDownloads/s/#//' /etc/pacman.conf
+sudo sed -i '/^#ParallelDownloads/s/^#//' /etc/pacman.conf
 
 # Enable multi-threading in makepkg and set it to use all available cores
 sudo sed -i "/^MAKEFLAGS=/cMAKEFLAGS=\"-j$(nproc)\"" /etc/makepkg.conf
@@ -55,7 +55,7 @@ sudo cp -r /usr/share/grub/themes/catppuccin-mocha /boot/grub/themes/
 sudo sed -i '/#GRUB_THEME/aGRUB_THEME="/boot/grub/themes/catppuccin-mocha/theme.txt"' /etc/default/grub
 # Catppuccin Plymouth
 sudo sed -i '/^HOOKS=(/s/base/base plymouth/' /etc/mkinitcpio.conf
-sudo sed -i '/^#\[Daemon\]/s/#//' /etc/plymouth/plymouthd.conf
+sudo sed -i '/^#\[Daemon\]/s/^#//' /etc/plymouth/plymouthd.conf
 sudo sed -i '/^#Theme=/cTheme=catppuccin-mocha' /etc/plymouth/plymouthd.conf
 
 # Update the GRUB configuration and the initramfs
