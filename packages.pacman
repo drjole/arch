@@ -4,6 +4,7 @@ eza
 fzf
 htop
 inetutils
+jq
 lazygit
 networkmanager-openconnect
 ripgrep
@@ -41,6 +42,7 @@ xss-lock
 alacritty
 discord
 firefox
+gnome-keyring
 libreoffice-still
 network-manager-applet
 nextcloud-client
