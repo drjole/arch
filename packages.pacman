@@ -25,6 +25,7 @@ pipewire-audio
 pipewire-alsa
 pipewire-pulse
 pipewire-jack
+playerctl
 
 # Window manager related packages
 dex
