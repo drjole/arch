@@ -1,4 +1,5 @@
 # Terminal/shell tools
+ansible
 bat
 eza
 fzf
@@ -7,6 +8,7 @@ inetutils
 jq
 lazygit
 networkmanager-openconnect
+pacman-contrib
 ripgrep
 starship
 stow
@@ -43,13 +45,16 @@ xss-lock
 alacritty
 discord
 firefox
+freerdp
 gnome-keyring
+gthumb
 libreoffice-still
 network-manager-applet
 nextcloud-client
 obsidian
 pavucontrol
 redshift
+remmina
 screenkey
 signal-desktop
 spotify-launcher
@@ -92,10 +97,12 @@ yaml-language-server
 
 # Docker
 docker
+docker-buildx
 docker-compose
 
 # reditus
 keepassxc
 mariadb-libs
 mkcert
+postgresql
 pre-commit
