@@ -33,8 +33,7 @@ rbenv install 3.1.4
 rbenv global 3.1.4
 rbenv rehash
 eval "$(rbenv init - zsh)"
-gem install solargraph solargraph-rails \
-  solargraph-rails-patch-for-rails71 # solargraph does not work well with Rails 7.1
+gem install ruby-lsp ruby-lsp-rails
 
 # Rust
 rustup default stable
