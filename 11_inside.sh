@@ -11,7 +11,7 @@ sed -i '/^HOOKS=(/s/filesystems/filesystems resume/' /etc/mkinitcpio.conf
 
 # Install some essential packages
 # This will also rebuild the initramfs
-pacman --noconfirm -S base-devel grub efibootmgr lvm2 git neovim zsh networkmanager
+pacman --noconfirm -S base-devel grub efibootmgr lvm2 git zsh networkmanager
 
 # Install GRUB
 grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=GRUB --recheck
