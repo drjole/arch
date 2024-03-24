@@ -16,6 +16,12 @@ sudo sed -i '/^#ParallelDownloads/s/^#//' /etc/pacman.conf
 # Enable multi-threading in makepkg and set it to use all available cores
 sudo sed -i "/^MAKEFLAGS=/cMAKEFLAGS=\"-j$(nproc)\"" /etc/makepkg.conf
 
+# Enable the multilib repository
+sudo sed -i '/\[multilib\]/,/Include = \/etc\/pacman.d\/mirrorlist/s/^#//' /etc/pacman.conf
+
+# Update the system
+sudo pacman --noconfirm -Syu
+
 # Install yay
 git clone https://aur.archlinux.org/yay.git /tmp/yay
 cd /tmp/yay
@@ -78,6 +84,12 @@ END {
         else print file[i];
     }
 }' /etc/pam.d/login >/tmp/temp_file && sudo mv /tmp/temp_file /etc/pam.d/login
+
+# Run the host-specific post-install script if it exists
+post_install_host="20_post-install.$(hostname).sh"
+if [[ -f "$post_install_host" ]]; then
+  . "$post_install_host"
+fi
 
 # Dotfiles
 git clone --recurse-submodules https://github.com/drjole/dotfiles ~/.dotfiles

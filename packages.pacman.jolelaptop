@@ -1,1 +1,15 @@
 @xorg minus xorg-xbacklight
+
+# Screen brightness
+acpilight
+
+# Graphics
+xf86-video-amdgpu
+lib32-mesa
+vulkan-radeon
+lib32-vulkan-radeon
+
+# Bluetooth
+blueman
+bluez
+bluez-utils

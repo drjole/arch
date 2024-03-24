@@ -2,16 +2,9 @@
 
 set -e
 
-# Ask for the sudo password upfront and make sure it is not asked for again
-sudo -v
-while true; do
-  sudo -n true
-  sleep 60
-  kill -0 "$$" || exit
-done 2>/dev/null &
-
-# Install the NVIDIA drivers
-sudo pacman --noconfirm -S mesa nvidia nvidia-settings
+#
+# Setup the NVIDIA driver
+#
 
 # Remove the kms hook from the initramfs
 sudo sed -i '/^HOOKS=(/s/ kms//' /etc/mkinitcpio.conf
@@ -26,4 +19,10 @@ sudo sed -i '/^GRUB_CMDLINE_LINUX_DEFAULT=/s/"$/ nvidia-drm.modeset=1"/' /etc/de
 sudo mkinitcpio -P
 sudo grub-mkconfig -o /boot/grub/grub.cfg
 
-echo "Now reboot the system to load the NVIDIA drivers."
+#
+# Backlight control using ddcutil
+#
+sudo usermod -aG i2c $USER
+cat <<EOF | sudo tee /etc/modules-load.d/i2c-dev.conf >/dev/null
+i2c-dev
+EOF

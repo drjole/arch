@@ -1,1 +1,10 @@
 @xorg
+
+# Graphics
+nvidia
+nvidia-settings
+nvidia-utils
+lib32-nvidia-utils
+
+# Screen brightness
+ddcutil

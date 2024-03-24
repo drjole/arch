@@ -152,8 +152,6 @@ Log out of the system:
 exit
 ```
 
-Finally, run any of the remaining scripts, as desired.
-
 ## Additional Steps
 
 - Add previous SSH keys.
