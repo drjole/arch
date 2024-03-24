@@ -16,7 +16,7 @@ tmux
 zsh-completions
 
 # Xorg related packages
-xorg
+# xorg is installed for each system independently because the xorg-xbacklight package is replaced by acpilight on jolelaptop
 xorg-xinit
 xclip
 xdotool
@@ -45,7 +45,6 @@ xss-lock
 alacritty
 discord
 firefox
-freerdp
 gnome-keyring
 gthumb
 libreoffice-still
@@ -54,7 +53,6 @@ nextcloud-client
 obsidian
 pavucontrol
 redshift
-remmina
 screenkey
 signal-desktop
 spotify-launcher
