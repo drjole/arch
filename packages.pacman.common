@@ -2,6 +2,7 @@
 ansible
 bat
 eza
+fd
 fzf
 htop
 inetutils
