@@ -8,11 +8,13 @@ htop
 inetutils
 jq
 lazygit
+neovim
 networkmanager-openconnect
 pacman-contrib
 ripgrep
 starship
 stow
+tree-sitter-cli
 tmux
 zsh-completions
 
