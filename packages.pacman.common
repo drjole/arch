@@ -111,6 +111,7 @@ docker-compose
 
 # TeX Live
 texlive
+texlive-langgerman
 biber
 ghostscript
 perl-yaml-tiny
