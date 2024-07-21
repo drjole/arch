@@ -97,6 +97,7 @@ npm
 rustup
 
 # Language servers
+clang
 gopls
 lua-language-server
 prettier
