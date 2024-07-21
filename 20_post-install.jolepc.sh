@@ -6,7 +6,8 @@ set -e
 # Setup the NVIDIA driver
 #
 
-# Remove the kms hook from the initramfs
+# Remove the kms hook from the initramfs.
+# "This will prevent the initramfs from containing the nouveau module making sure the kernel cannot load it during early boot."
 sudo sed -i '/^HOOKS=(/s/ kms//' /etc/mkinitcpio.conf
 
 # Add the nvidia modules to the initramfs
