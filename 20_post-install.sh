@@ -48,7 +48,7 @@ rustup default stable
 # LSPs
 rustup component add rust-analyzer
 # Install with prefix ~/.local which then must be set in the npm_config_prefix environment variable
-npm install -g --prefix ~/.local dockerfile-language-server-nodejs stimulus-language-server
+npm install -g --prefix ~/.local dockerfile-language-server-nodejs stimulus-language-server @tailwindcss/language-server
 
 # Syncthing
 systemctl --user enable --now syncthing
