@@ -27,7 +27,7 @@ git clone https://aur.archlinux.org/yay.git /tmp/yay
 cd /tmp/yay
 makepkg --noconfirm -si
 
-# Install all the tools
+# Install all the packages
 ./install_packages.sh --noconfirm
 
 # Docker
@@ -39,16 +39,10 @@ rbenv install 3.1.4
 rbenv global 3.1.4
 rbenv rehash
 eval "$(rbenv init - zsh)"
-gem install solargraph solargraph-rails \
-  solargraph-rails-patch-for-rails71 # https://github.com/iftheshoefritz/solargraph-rails/issues/60
 
 # Rust
 rustup default stable
-
-# LSPs
 rustup component add rust-analyzer
-# Install with prefix ~/.local which then must be set in the npm_config_prefix environment variable
-npm install -g --prefix ~/.local dockerfile-language-server-nodejs stimulus-language-server @tailwindcss/language-server
 
 # Syncthing
 systemctl --user enable --now syncthing

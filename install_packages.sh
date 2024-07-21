@@ -2,16 +2,16 @@
 
 set -e
 
-# This script installs packages as defeined in packages files.
+# This script installs packages as defined in packages files.
 #
-# The file name of a packages file is expected to be packages.pacman.$(hostname) or packages.yay.$(hostname) depending on the package manager to use.
-# If the file ends in .common, it is used for all hosts.
+# The file name of a packages file is expected to be packages.<package manager>.$(hostname).
+# If the file ends in .common instead of the hostname, it is used for all hosts.
 #
 # The packages files should contain a list of packages and package groups, one per line.
 # Lines starting with # are ignored. Empty lines are ignored.
 #
-# Package names starting with @ are treated as package groups.
-# These lines can be followed by 'minus package1 package2 ...' to exclude packages from the group.
+# Lines starting with @ are treated as package groups.
+# These lines can be followed by 'minus <package1> <package2> ...' to exclude packages from the group.
 
 # The user can provide --noconfirm to the script which is passed both to pacman and yay
 noconfirm=""
@@ -77,7 +77,20 @@ install_packages() {
   if [[ "$package_manager" == "yay" ]]; then
     yay $noconfirm -S --needed "${packages[@]}"
   fi
+  if [[ "$package_manager" == "cargo" ]]; then
+    cargo install "${packages[@]}"
+  fi
+  if [[ "$package_manager" == "gem" ]]; then
+    gem install "${packages[@]}"
+  fi
+  if [[ "$package_manager" == "npm" ]]; then
+    # Install with prefix ~/.local which then must be set in the npm_config_prefix environment variable
+    npm install -g --prefix ~/.local "${packages[@]}"
+  fi
 }
 
 install_packages "pacman"
 install_packages "yay"
+install_packages "cargo"
+install_packages "gem"
+install_packages "npm"
