@@ -1,7 +1,7 @@
 @xorg
 
 # Graphics
-nvidia
+nvidia-dkms
 nvidia-settings
 nvidia-utils
 lib32-nvidia-utils
