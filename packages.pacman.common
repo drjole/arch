@@ -46,6 +46,7 @@ xss-lock
 
 # Desktop applications
 alacritty
+chromium
 discord
 firefox
 gimp
@@ -105,6 +106,8 @@ python-lsp-server
 shfmt
 texlab
 yaml-language-server
+# Language tools
+sqlfluff
 
 # Docker
 docker

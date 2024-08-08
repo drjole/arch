@@ -1,4 +1,4 @@
-@xorg minus xorg-xbacklight
+%xorg minus xorg-xbacklight
 
 # Screen brightness
 acpilight

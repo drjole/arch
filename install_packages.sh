@@ -10,14 +10,8 @@ set -e
 # The packages files should contain a list of packages and package groups, one per line.
 # Lines starting with # are ignored. Empty lines are ignored.
 #
-# Lines starting with @ are treated as package groups.
+# Lines starting with % are treated as package groups.
 # These lines can be followed by 'minus <package1> <package2> ...' to exclude packages from the group.
-
-# The user can provide --noconfirm to the script which is passed both to pacman and yay
-noconfirm=""
-if [[ "$1" == "--noconfirm" ]]; then
-  noconfirm="--noconfirm"
-fi
 
 # A function for parsing a packages file.
 # Given the file name, it reads the file and returns a list of packages to install.
@@ -33,7 +27,7 @@ parse_packages_file() {
     if [[ "$line" =~ ^#.*$ ]] || [[ -z "$line" ]]; then
       continue
     fi
-    if [[ "$line" == @* ]]; then
+    if [[ "$line" == %* ]]; then
       group_packages=($(parse_group_line "$line"))
       packages=(${packages[@]} ${group_packages[@]})
     else
@@ -44,13 +38,13 @@ parse_packages_file() {
   echo "${packages[@]}"
 }
 
-# A function for parsing a '@group minus package1 package2 ...' line.
+# A function for parsing a '%group minus package1 package2 ...' line.
 # Given the line as the first argument, it returns a list of packages to install from the group excluding the specified packages.
 parse_group_line() {
   local line="$1"
-  local group_name=$(echo "$line" | cut -d' ' -f1 | sed 's/^@//')
+  local group_name=$(echo "$line" | cut -d' ' -f1 | sed 's/^%//')
   local group_packages=($(pacman -Sgq "$group_name"))
-  local minus_packages=$(echo "$line" | sed -n 's/^@.* minus //p')
+  local minus_packages=$(echo "$line" | sed -n 's/^%.* minus //p')
   for minus_package in $minus_packages; do
     group_packages=($(echo "${group_packages[@]}" | sed "s/\b$minus_package\b//g"))
   done
@@ -72,16 +66,22 @@ install_packages() {
   fi
 
   if [[ "$package_manager" == "pacman" ]]; then
-    sudo pacman $noconfirm -S --needed "${packages[@]}"
+    sudo pacman -S --needed "${packages[@]}"
   fi
   if [[ "$package_manager" == "yay" ]]; then
-    yay $noconfirm -S --needed "${packages[@]}"
+    yay -S --needed "${packages[@]}"
   fi
   if [[ "$package_manager" == "cargo" ]]; then
     cargo install "${packages[@]}"
   fi
   if [[ "$package_manager" == "gem" ]]; then
     gem install "${packages[@]}"
+  fi
+  if [[ "$package_manager" == "go" ]]; then
+    # go install only works with a single package at a time so we loop here
+    for package in "${packages[@]}"; do
+      go install "$package"
+    done
   fi
   if [[ "$package_manager" == "npm" ]]; then
     # Install with prefix ~/.local which then must be set in the npm_config_prefix environment variable
@@ -91,6 +91,8 @@ install_packages() {
 
 install_packages "pacman"
 install_packages "yay"
+
 install_packages "cargo"
 install_packages "gem"
+install_packages "go"
 install_packages "npm"
