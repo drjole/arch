@@ -73,11 +73,14 @@ python-gobject
 # Theming
 hicolor-icon-theme
 kvantum
+kvantum-qt5
 ttf-jetbrains-mono-nerd
 noto-fonts
+noto-fonts-cjk
 noto-fonts-emoji
 papirus-icon-theme
 plymouth
+qt5ct
 ttf-liberation
 
 # Steam
