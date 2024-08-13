@@ -28,7 +28,7 @@ cd /tmp/yay
 makepkg --noconfirm -si
 
 # Install all the packages
-./install_packages.sh --noconfirm
+./install_packages.sh
 
 # Docker
 sudo systemctl enable --now docker
@@ -57,6 +57,8 @@ sudo sed -i '/#GRUB_THEME/aGRUB_THEME="/boot/grub/themes/catppuccin-mocha/theme.
 sudo sed -i '/^HOOKS=(/s/base/base plymouth/' /etc/mkinitcpio.conf
 sudo sed -i '/^#\[Daemon\]/s/^#//' /etc/plymouth/plymouthd.conf
 sudo sed -i '/^#Theme=/cTheme=catppuccin-mocha' /etc/plymouth/plymouthd.conf
+# Catppuccin Papirus folders
+papirus-folders --color cat-mocha-lavender
 
 # Update the GRUB configuration and the initramfs
 sudo mkinitcpio -P
