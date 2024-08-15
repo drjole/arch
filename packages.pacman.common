@@ -20,6 +20,7 @@ zsh-completions
 # Xorg related packages
 # xorg is installed for each system independently because the xorg-xbacklight package is replaced by acpilight on jolelaptop
 mesa
+lib32-mesa
 xorg-xinit
 xclip
 xdotool
