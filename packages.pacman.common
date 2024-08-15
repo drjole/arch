@@ -15,7 +15,9 @@ starship
 stow
 tree-sitter-cli
 tmux
+zsh-autosuggestions
 zsh-completions
+zsh-syntax-highlighting
 
 # Xorg related packages
 # xorg is installed for each system independently because the xorg-xbacklight package is replaced by acpilight on jolelaptop
