@@ -8,6 +8,8 @@ source /00_config.sh
 # Configure the initramfs
 sed -i '/^HOOKS=(/s/block/block encrypt lvm2/' /etc/mkinitcpio.conf
 sed -i '/^HOOKS=(/s/filesystems/filesystems resume/' /etc/mkinitcpio.conf
+# Remove the consolefont hook
+sed -i '/^HOOKS=(/s/ consolefont//' /etc/mkinitcpio.conf
 
 # Install some essential packages
 # This will also rebuild the initramfs
