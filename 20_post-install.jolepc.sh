@@ -11,7 +11,8 @@ set -e
 sudo sed -i '/^HOOKS=(/s/ kms//' /etc/mkinitcpio.conf
 
 # Add the nvidia modules to the initramfs
-sudo sed -i '/^MODULES=(/s/)/ nvidia nvidia_modeset nvidia_uvm nvidia_drm)/' /etc/mkinitcpio.conf
+# Disabled this for now as it seems to cause a kernel panic when resuming from suspend
+# sudo sed -i '/^MODULES=(/s/)/ nvidia nvidia_modeset nvidia_uvm nvidia_drm)/' /etc/mkinitcpio.conf
 
 # Set the DRM kernel mode setting kernel parameter
 sudo sed -i '/^GRUB_CMDLINE_LINUX_DEFAULT=/s/"$/ nvidia-drm.modeset=1"/' /etc/default/grub
