@@ -7,6 +7,7 @@ htop
 inetutils
 jq
 lazygit
+libxml2
 neovim
 networkmanager-openconnect
 pacman-contrib
@@ -55,6 +56,7 @@ firefox
 gimp
 gnome-keyring
 gvfs
+inkscape
 libreoffice-still
 network-manager-applet
 nextcloud-client
