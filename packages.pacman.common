@@ -134,3 +134,9 @@ mariadb-libs
 mkcert
 postgresql
 pre-commit
+
+# Printing and scanning
+hplip
+python-pyqt5
+python-pillow
+sane
