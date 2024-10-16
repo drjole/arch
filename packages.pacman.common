@@ -1,10 +1,12 @@
 # Terminal/shell tools
 bat
+bind
 eza
 fd
 fzf
 htop
 inetutils
+iputils
 jq
 lazygit
 neovim
@@ -13,6 +15,7 @@ pacman-contrib
 ripgrep
 starship
 stow
+traceroute
 tree-sitter-cli
 tmux
 zsh-autosuggestions
