@@ -19,3 +19,7 @@ ruby-build
 
 # Misc
 upd72020x-fw
+
+# Citrix
+icaclient
+hdx-realtime-media-engine

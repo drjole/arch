@@ -82,6 +82,23 @@ END {
     }
 }' /etc/pam.d/login >/tmp/temp_file && sudo mv /tmp/temp_file /etc/pam.d/login
 
+# Citrix Workspace
+cat <<EOF | sudo tee /usr/bin/pulseaudio >/dev/null
+#!/bin/sh
+
+# https://wiki.archlinux.org/title/Citrix#Pipewire
+if [ "$1" == "--version" ]; then
+    pactl info | grep Server\ Name | sed -e "s/Server Name: //"
+else
+    echo "This is a dummy file for apps that check if pulseaudio is available by checking for the binary existing"
+fi
+EOF
+sudo chmod +x /usr/bin/pulseaudio
+sudo ln -s /usr/lib/libunwind.so /usr/lib/libunwind.so.1
+mkdir -p $HOME/.ICAClient/cache
+cp /opt/Citrix/ICAClient/config/{All_Regions,Trusted_Region,Unknown_Region,canonicalization,regions}.ini $HOME/.ICAClient/
+echo "Set the webcam in ~/.ICAClient/wfclient.ini in the [WFClient] section: HDXWebCamDevice=/dev/video0"
+
 # Run the host-specific post-install script if it exists
 post_install_host="20_post-install.$(hostname).sh"
 if [[ -f "$post_install_host" ]]; then
