@@ -4,11 +4,13 @@ bind
 eza
 fd
 fzf
+git-delta
 htop
 inetutils
 iputils
 jq
 lazygit
+luarocks
 neovim
 networkmanager-openconnect
 pacman-contrib
@@ -144,3 +146,7 @@ hplip
 python-pyqt5
 python-pillow
 sane
+
+# Libraries
+ant
+libvips

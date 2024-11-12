@@ -93,6 +93,6 @@ install_packages "pacman"
 install_packages "yay"
 
 install_packages "cargo"
-install_packages "gem"
+# install_packages "gem"
 install_packages "go"
 install_packages "npm"
