@@ -9,10 +9,8 @@ vulkan-radeon
 lib32-vulkan-radeon
 
 # Hardware video acceleration
-libva-mesa-driver
-lib32-libva-mesa-driver
-mesa-vdpau
-lib32-mesa-vdpau
+mesa
+lib32-mesa
 
 # Bluetooth
 blueman
