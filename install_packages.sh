@@ -75,7 +75,14 @@ install_packages() {
     cargo install "${packages[@]}"
   fi
   if [[ "$package_manager" == "gem" ]]; then
-    gem install "${packages[@]}"
+    # gem update only works with a single gem at a time so we loop here
+    for package in "${packages[@]}"; do
+      if gem list -i "$package" >/dev/null; then
+        gem update "$package"
+      else
+        gem install "$package"
+      fi
+    done
   fi
   if [[ "$package_manager" == "go" ]]; then
     # go install only works with a single package at a time so we loop here
@@ -93,6 +100,6 @@ install_packages "pacman"
 install_packages "yay"
 
 install_packages "cargo"
-# install_packages "gem"
+install_packages "gem"
 install_packages "go"
 install_packages "npm"
