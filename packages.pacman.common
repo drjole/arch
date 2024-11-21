@@ -6,6 +6,7 @@ fd
 fzf
 htop
 inetutils
+inotify-tools
 iputils
 jq
 lazygit
