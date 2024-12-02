@@ -11,6 +11,7 @@ iputils
 jq
 lazygit
 luarocks
+man-pages
 neovim
 networkmanager-openconnect
 pacman-contrib
