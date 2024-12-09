@@ -34,7 +34,7 @@ mount /dev/mapper/arch-root /mnt
 mount --mkdir "$ARCH_INSTALL_BOOT_PARTITION" /mnt/boot
 
 # Install the base system
-pacstrap -K /mnt base linux-lts linux-firmware
+pacstrap -K /mnt base linux linux-firmware
 
 # Generate the fstab file
 genfstab -U -p /mnt >/mnt/etc/fstab
