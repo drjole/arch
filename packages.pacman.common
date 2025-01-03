@@ -19,6 +19,7 @@ pacman-contrib
 ripgrep
 starship
 stow
+tk
 traceroute
 tree-sitter-cli
 tmux
