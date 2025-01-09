@@ -11,9 +11,7 @@ inotify-tools
 iputils
 jq
 lazygit
-luarocks
 man-pages
-neovim
 networkmanager-openconnect
 pacman-contrib
 ripgrep
@@ -104,6 +102,8 @@ xdg-desktop-portal-gtk
 cmake
 go
 jdk17-openjdk
+lua51
+luarocks
 openjdk17-doc
 openjdk17-src
 nodejs-lts-iron
