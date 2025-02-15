@@ -107,7 +107,7 @@ lua51
 luarocks
 openjdk17-doc
 openjdk17-src
-nodejs-lts-iron
+nodejs-lts-jod
 npm
 rustup
 
