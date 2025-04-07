@@ -3,6 +3,7 @@ bat
 bind
 eza
 fd
+ffmpegthumbnailer
 fzf
 htop
 imagemagick
@@ -19,9 +20,10 @@ ripgrep
 starship
 stow
 tk
+tmux
 traceroute
 tree-sitter-cli
-tmux
+tumbler
 zsh-autosuggestions
 zsh-completions
 zsh-syntax-highlighting
