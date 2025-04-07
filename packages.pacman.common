@@ -12,6 +12,7 @@ iputils
 jq
 lazygit
 man-pages
+neovim
 networkmanager-openconnect
 pacman-contrib
 ripgrep
