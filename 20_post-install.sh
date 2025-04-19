@@ -5,10 +5,14 @@ set -e
 # Ask for the sudo password upfront and make sure it is not asked for again
 sudo -v
 while true; do
-  sudo -n true
-  sleep 60
-  kill -0 "$$" || exit
+    sudo -n true
+    sleep 60
+    kill -0 "$$" || exit
 done 2>/dev/null &
+
+# Set keyboard layout
+sudo localectl set-keymap --no-convert us
+sudo localectl set-x11-keymap --no-convert de pc105 us compose:rwin
 
 # Enable parallel downloads in pacman
 sudo sed -i '/^#ParallelDownloads/s/^#//' /etc/pacman.conf
@@ -105,7 +109,7 @@ echo "Set the webcam in ~/.ICAClient/wfclient.ini in the [WFClient] section: HDX
 # Run the host-specific post-install script if it exists
 post_install_host="20_post-install.$(hostname).sh"
 if [[ -f "$post_install_host" ]]; then
-  . "$post_install_host"
+    . "$post_install_host"
 fi
 
 # Dotfiles
