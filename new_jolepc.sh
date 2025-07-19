@@ -22,7 +22,7 @@ grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=GRUB --re
 grub-mkconfig -o /boot/grub/grub.cfg
 
 ln -sf /usr/share/zoneinfo/Europe/Berlin /etc/localtime
-# systemctl enable systemd-timesyncd
+# systemctl enable systemd-timesyncd.service
 sed -i '/^#en_US.UTF-8 UTF-8/s/^#//' /etc/locale.gen
 sed -i '/^#de_DE.UTF-8 UTF-8/s/^#//' /etc/locale.gen
 locale-gen
@@ -36,7 +36,7 @@ passwd jole
 
 sed -i '/^# %wheel ALL=(ALL:ALL) ALL/s/^#//' /etc/sudoers
 
-systemctl enable NetworkManager
+systemctl enable NetworkManager.service
 
 exit
 
@@ -58,10 +58,10 @@ sudo pacman -S \
     mesa lib32-mesa vulkan-radeon lib32-vulkan-radeon \
     qt5-wayland qt6-wayland \
     noto-fonts noto-fonts-emoji ttf-jetbrains-mono-nerd ttf-font-awesome otf-font-awesome \
-    hyprland xdg-desktop-portal-hyprland hyprpolkitagent hyprpaper wofi dunst hyprlock wl-clipboard hyprsunset \
+    ly hyprland xdg-desktop-portal-hyprland hyprpolkitagent hyprpaper wofi dunst hyprlock wl-clipboard hyprsunset \
     waybar network-manager-applet \
     pipewire pipewire-audio pipewire-alsa pipewire-pulse pipewire-jack wireplumber \
-    alacritty firefox thunar spotify-launcher discord pavucontrol gimp inkscape libreoffice-still nextcloud-client signal-desktop vlc zathura zathura-pdf-poppler keepassxc steam teamspeak3 \
+    alacritty firefox thunar spotify-launcher discord pavucontrol gimp inkscape libreoffice-still nextcloud-client signal-desktop vlc zathura zathura-pdf-poppler keepassxc steam teamspeak3 chromium \
     gnome-themes-extra qt5ct qt6ct kvantum breeze-icons \
     zsh-autosuggestions zsh-completions zsh-syntax-highlighting \
     fzf starship eza bat htop tmux ddcutil man-db ripgrep stow fd lazygit \
@@ -78,9 +78,20 @@ yay -S catppuccin-cursors-mocha catppuccin-gtk-theme-mocha
 
 git clone --recurse-submodules https://github.com/drjole/dotfiles ~/.dotfiles
 pushd ~/.dotfiles
+git remote set-url origin git@github.com:drjole/dotfiles.git
 find . -mindepth 1 -maxdepth 1 -type d -not -name .git -printf "%f\n" | xargs -I {} mkdir -p "$HOME"/{}
 stow .
 popd
+
+sudo systemctl --enable ly.service
+# Change in /etc/ly/config.ini
+#   tty = 1
+#   brightness_up_key = null
+#   brightness_down_key = null
+#   hide_key_hints = true
+#   sleep_key = F10
+#   restart_key = F11
+#   shutdown_key = F12
 
 sudo systemctl enable --now paccache.timer
 
@@ -94,5 +105,8 @@ sudo systemctl enable --now bluetooth.service
 mise trust ~/.dotfiles/.config/mise/config.toml
 mise use -g usage node ruby
 
-sudo systemctl enable --now docker
+sudo systemctl enable --now docker.service
 sudo usermod -a -G docker jole
+
+ssh-keygen -t ed25519
+echo "SSH key generated. Add it at least to GitHub"
