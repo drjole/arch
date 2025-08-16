@@ -19,14 +19,15 @@ fi
 
 # Install all the packages
 sudo pacman -Syu --noconfirm --needed \
+    base-devel git \
     mesa lib32-mesa vulkan-radeon lib32-vulkan-radeon \
     pipewire pipewire-audio pipewire-alsa pipewire-pulse pipewire-jack wireplumber \
     hyprland uwsm libnewt xdg-desktop-portal-hyprland hyprpolkitagent hyprpaper waybar rofi dunst hyprlock wl-clipboard hyprsunset grim slurp qt5-wayland qt6-wayland \
     noto-fonts noto-fonts-emoji ttf-jetbrains-mono-nerd ttf-font-awesome otf-font-awesome \
     alacritty firefox nautilus spotify-launcher discord pavucontrol gimp inkscape libreoffice-still nextcloud-client signal-desktop vlc zathura zathura-pdf-poppler steam teamspeak3 gnome-keyring \
     qt5ct qt6ct kvantum breeze-icons \
-    zsh-autosuggestions zsh-completions zsh-syntax-highlighting \
-    fzf starship eza bat htop tmux ddcutil man-db ripgrep fd lazygit jq \
+    zsh zsh-autosuggestions zsh-completions zsh-syntax-highlighting \
+    neovim fzf starship eza bat htop tmux ddcutil man-db ripgrep fd lazygit jq \
     pacman-contrib
 
 # yay
@@ -74,6 +75,9 @@ if [ ! -e "~/.dotfiles" ]; then
     stow .
     popd
 fi
+
+# Shell
+sudo chsh --shell /bin/zsh jole
 
 # Theming
 yay -S --noconfirm --needed catppuccin-gtk-theme-mocha catppuccin-cursors-mocha yaru-icon-theme
