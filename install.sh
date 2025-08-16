@@ -93,8 +93,8 @@ sudo chsh --shell /bin/zsh jole
 yay -S --noconfirm --needed catppuccin-gtk-theme-mocha catppuccin-cursors-mocha yaru-icon-theme
 
 # Bluetooth
-# sudo pacman -S --noconfirm --needed blueman bluez bluez-utils
-# sudo systemctl enable --now bluetooth.service
+sudo pacman -S --noconfirm --needed blueman bluez bluez-utils
+sudo systemctl enable --now bluetooth.service
 
 # Development environments
 sudo pacman -S --noconfirm --needed mise
