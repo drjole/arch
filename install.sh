@@ -29,14 +29,6 @@ sudo pacman -Syu --noconfirm --needed \
     fzf starship eza bat htop tmux ddcutil man-db ripgrep fd lazygit jq \
     pacman-contrib
 
-# Configure PAM for GNOME Keyring unlocking
-if ! grep -q '^auth \+optional \+pam_gnome_keyring.so' /etc/pam.d/login; then
-    sudo sed -i '/^account/ i auth       optional     pam_gnome_keyring.so' /etc/pam.d/login
-fi
-if ! grep -q '^session \+optional \+pam_gnome_keyring.so auto_start' /etc/pam.d/login; then
-    sudo sed -i '/^password/ i session    optional     pam_gnome_keyring.so auto_start' /etc/pam.d/login
-fi
-
 # yay
 if ! command -v yay >/dev/null 2>&1; then
     git clone https://aur.archlinux.org/yay.git /tmp/yay
@@ -45,8 +37,18 @@ if ! command -v yay >/dev/null 2>&1; then
     popd
 fi
 
-# Theming
-yay -S --noconfirm --needed catppuccin-gtk-theme-mocha catppuccin-cursors-mocha yaru-icon-theme
+# Docker
+sudo pacman -S --noconfirm --needed docker docker-compose docker-buildx
+sudo systemctl enable --now docker.service
+sudo usermod -a -G docker jole
+
+# Configure PAM for GNOME Keyring unlocking
+if ! grep -q '^auth \+optional \+pam_gnome_keyring.so' /etc/pam.d/login; then
+    sudo sed -i '/^account/ i auth       optional     pam_gnome_keyring.so' /etc/pam.d/login
+fi
+if ! grep -q '^session \+optional \+pam_gnome_keyring.so auto_start' /etc/pam.d/login; then
+    sudo sed -i '/^password/ i session    optional     pam_gnome_keyring.so auto_start' /etc/pam.d/login
+fi
 
 # Brightness control
 sudo usermod -aG i2c $USER
@@ -55,22 +57,6 @@ if [ ! -e "/etc/modules-load.d/ic2-dev.conf" ]; then
 i2c-dev
 EOF
 fi
-
-# Bluetooth
-# sudo pacman -S --noconfirm --needed blueman bluez bluez-utils
-# sudo systemctl enable --now bluetooth.service
-
-# Development environments
-sudo pacman -S --noconfirm --needed mise
-mise trust ~/.dotfiles/.config/mise/config.toml
-mise use -g usage
-mise use -g node
-mise use -g ruby
-
-# Docker
-sudo pacman -S --noconfirm --needed docker docker-compose docker-buildx
-sudo systemctl enable --now docker.service
-sudo usermod -a -G docker jole
 
 # Sensors
 if [ ! -e "/etc/modules-load.d/nct6775.conf" ]; then
@@ -88,6 +74,20 @@ if [ ! -e "~/.dotfiles" ]; then
     stow .
     popd
 fi
+
+# Theming
+yay -S --noconfirm --needed catppuccin-gtk-theme-mocha catppuccin-cursors-mocha yaru-icon-theme
+
+# Bluetooth
+# sudo pacman -S --noconfirm --needed blueman bluez bluez-utils
+# sudo systemctl enable --now bluetooth.service
+
+# Development environments
+sudo pacman -S --noconfirm --needed mise
+mise trust ~/.dotfiles/.config/mise/config.toml
+mise use -g usage
+mise use -g node
+mise use -g ruby
 
 # reditus
 sudo pacman -S --noconfirm --needed pre-commit mkcert postgresql keepassxc chromium
