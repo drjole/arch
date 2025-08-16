@@ -16,7 +16,7 @@ else
 fi
 
 # Install all the packages
-sudo pacman -S --noconfirm \
+sudo pacman -Syu --noconfirm \
     mesa lib32-mesa vulkan-radeon lib32-vulkan-radeon \
     pipewire pipewire-audio pipewire-alsa pipewire-pulse pipewire-jack wireplumber \
     hyprland uwsm libnewt xdg-desktop-portal-hyprland hyprpolkitagent hyprpaper waybar rofi dunst hyprlock wl-clipboard hyprsunset grim slurp qt5-wayland qt6-wayland \
