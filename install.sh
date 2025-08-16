@@ -2,6 +2,16 @@
 
 set -e
 
+# Locales
+if grep -q '^#.*en_US\.UTF-8' /etc/locale.gen; then
+    sudo sed -i 's/^# *\(en_US\.UTF-8.*\)/\1/' /etc/locale.gen
+    sudo locale-gen
+fi
+if grep -q '^#.*de_DE\.UTF-8' /etc/locale.gen; then
+    sudo sed -i 's/^# *\(de_DE\.UTF-8.*\)/\1/' /etc/locale.gen
+    sudo locale-gen
+fi
+
 # Configure pacman
 # Enable multilib repository
 if ! grep -q "^\[multilib\]" /etc/pacman.conf; then
@@ -67,9 +77,9 @@ fi
 
 # Dotfiles
 sudo pacman -S --noconfirm --needed stow
-if [ ! -e "~/.dotfiles" ]; then
-    git clone --recurse-submodules https://github.com/drjole/dotfiles ~/.dotfiles
-    pushd ~/.dotfiles
+if [ ! -e "$HOME/.dotfiles" ]; then
+    git clone --recurse-submodules https://github.com/drjole/dotfiles "$HOME/.dotfiles"
+    pushd "$HOME/.dotfiles"
     git remote set-url origin git@github.com:drjole/dotfiles.git
     find . -mindepth 1 -maxdepth 1 -type d -not -name .git -printf "%f\n" | xargs -I {} mkdir -p "$HOME"/{}
     stow .
@@ -88,7 +98,7 @@ yay -S --noconfirm --needed catppuccin-gtk-theme-mocha catppuccin-cursors-mocha 
 
 # Development environments
 sudo pacman -S --noconfirm --needed mise
-mise trust ~/.dotfiles/.config/mise/config.toml
+mise trust "$HOME/.dotfiles/.config/mise/config.toml"
 mise use -g usage
 mise use -g node
 mise use -g ruby
