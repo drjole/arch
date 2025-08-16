@@ -38,19 +38,23 @@ if ! grep -q '^session \+optional \+pam_gnome_keyring.so auto_start' /etc/pam.d/
 fi
 
 # yay
-git clone https://aur.archlinux.org/yay.git /tmp/yay
-pushd /tmp/yay
-makepkg -si
-popd
+if ! command -v yay >/dev/null 2>&1; then
+    git clone https://aur.archlinux.org/yay.git /tmp/yay
+    pushd /tmp/yay
+    makepkg -si
+    popd
+fi
 
 # Theming
 yay -S --noconfirm catppuccin-gtk-theme-mocha catppuccin-cursors-mocha yaru-icon-theme
 
 # Brightness control
 sudo usermod -aG i2c $USER
-cat <<EOF | sudo tee /etc/modules-load.d/i2c-dev.conf >/dev/null
+if [ ! -e "/etc/modules-load.d/ic2-dev.conf" ]; then
+    cat <<EOF | sudo tee /etc/modules-load.d/i2c-dev.conf >/dev/null
 i2c-dev
 EOF
+fi
 
 # Bluetooth
 sudo pacman -S --noconfirm blueman bluez bluez-utils
@@ -69,17 +73,21 @@ sudo systemctl enable --now docker.service
 sudo usermod -a -G docker jole
 
 # Sensors
-echo nct6775 | sudo tee /etc/modules-load.d/nct6775.conf
-echo "options nct6775 force_id=0xd802" | sudo tee /etc/modprobe.d/nct6775.conf
+if [ ! -e "/etc/modules-load.d/nct6775.conf" ]; then
+    echo nct6775 | sudo tee /etc/modules-load.d/nct6775.conf
+    echo "options nct6775 force_id=0xd802" | sudo tee /etc/modprobe.d/nct6775.conf
+fi
 
 # Dotfiles
 sudo pacman -S --noconfirm stow
-git clone --recurse-submodules https://github.com/drjole/dotfiles ~/.dotfiles
-pushd ~/.dotfiles
-git remote set-url origin git@github.com:drjole/dotfiles.git
-find . -mindepth 1 -maxdepth 1 -type d -not -name .git -printf "%f\n" | xargs -I {} mkdir -p "$HOME"/{}
-stow .
-popd
+if [ ! -e "~/.dotfiles" ]; then
+    git clone --recurse-submodules https://github.com/drjole/dotfiles ~/.dotfiles
+    pushd ~/.dotfiles
+    git remote set-url origin git@github.com:drjole/dotfiles.git
+    find . -mindepth 1 -maxdepth 1 -type d -not -name .git -printf "%f\n" | xargs -I {} mkdir -p "$HOME"/{}
+    stow .
+    popd
+fi
 
 # reditus
 sudo pacman -S --noconfirm pre-commit mkcert postgresql keepassxc chromium
