@@ -51,7 +51,7 @@ if ! grep -q '^session \+optional \+pam_gnome_keyring.so auto_start' /etc/pam.d/
 fi
 
 # Brightness control
-sudo usermod -aG i2c $USER
+sudo usermod -aG i2c jole
 if [ ! -e "/etc/modules-load.d/ic2-dev.conf" ]; then
     cat <<EOF | sudo tee /etc/modules-load.d/i2c-dev.conf >/dev/null
 i2c-dev
