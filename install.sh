@@ -51,18 +51,18 @@ i2c-dev
 EOF
 
 # Bluetooth
-sudo pacman -S --no-confirm blueman bluez bluez-utils
+sudo pacman -S --noconfirm blueman bluez bluez-utils
 sudo systemctl enable --now bluetooth.service
 
 # Development environments
-sudo pacman -S --no-confirm mise
+sudo pacman -S --noconfirm mise
 mise trust ~/.dotfiles/.config/mise/config.toml
 mise use -g usage
 mise use -g node
 mise use -g ruby
 
 # Docker
-sudo pacman -S --no-confirm docker docker-compose docker-buildx
+sudo pacman -S --noconfirm docker docker-compose docker-buildx
 sudo systemctl enable --now docker.service
 sudo usermod -a -G docker jole
 
@@ -71,7 +71,7 @@ echo nct6775 | sudo tee /etc/modules-load.d/nct6775.conf
 echo "options nct6775 force_id=0xd802" | sudo tee /etc/modprobe.d/nct6775.conf
 
 # Dotfiles
-sudo pacman -S --no-confirm stow
+sudo pacman -S --noconfirm stow
 git clone --recurse-submodules https://github.com/drjole/dotfiles ~/.dotfiles
 pushd ~/.dotfiles
 git remote set-url origin git@github.com:drjole/dotfiles.git
@@ -80,7 +80,7 @@ stow .
 popd
 
 # reditus
-sudo pacman -S --no-confirm pre-commit mkcert postgresql keepassxc chromium
+sudo pacman -S --noconfirm pre-commit mkcert postgresql keepassxc chromium
 
 # Firefox
 # Set `intl.regional_prefs.use_os_locales` to true to use german date formats in firefox while keeping language at english
