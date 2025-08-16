@@ -85,6 +85,7 @@ if [ ! -e "$HOME/.dotfiles" ]; then
     stow .
     popd
 fi
+bat cache --build
 
 # Shell
 sudo chsh --shell /bin/zsh jole
