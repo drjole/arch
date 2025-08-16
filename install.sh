@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e
+
 # Configure pacman
 # Enable multilib repository
 if ! grep -q "^\[multilib\]" /etc/pacman.conf; then
