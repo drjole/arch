@@ -57,8 +57,8 @@ EOF
 fi
 
 # Bluetooth
-sudo pacman -S --noconfirm blueman bluez bluez-utils
-sudo systemctl enable --now bluetooth.service
+# sudo pacman -S --noconfirm blueman bluez bluez-utils
+# sudo systemctl enable --now bluetooth.service
 
 # Development environments
 sudo pacman -S --noconfirm mise
