@@ -87,6 +87,12 @@ if [ ! -e "$HOME/.dotfiles" ]; then
 fi
 bat cache --build
 
+# Services
+systemctl --user enable --now hyprpaper
+systemctl --user enable --now hyprpolkitagent
+systemctl --user enable --now hyprsunset
+systemctl --user enable --now waybar
+
 # Shell
 sudo chsh --shell /bin/zsh jole
 
