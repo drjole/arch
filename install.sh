@@ -46,7 +46,7 @@ if ! command -v yay >/dev/null 2>&1; then
 fi
 
 # Theming
-yay -S --noconfirm catppuccin-gtk-theme-mocha catppuccin-cursors-mocha yaru-icon-theme
+yay -S --noconfirm --needed catppuccin-gtk-theme-mocha catppuccin-cursors-mocha yaru-icon-theme
 
 # Brightness control
 sudo usermod -aG i2c $USER
@@ -57,18 +57,18 @@ EOF
 fi
 
 # Bluetooth
-# sudo pacman -S --noconfirm blueman bluez bluez-utils
+# sudo pacman -S --noconfirm --needed blueman bluez bluez-utils
 # sudo systemctl enable --now bluetooth.service
 
 # Development environments
-sudo pacman -S --noconfirm mise
+sudo pacman -S --noconfirm --needed mise
 mise trust ~/.dotfiles/.config/mise/config.toml
 mise use -g usage
 mise use -g node
 mise use -g ruby
 
 # Docker
-sudo pacman -S --noconfirm docker docker-compose docker-buildx
+sudo pacman -S --noconfirm --needed docker docker-compose docker-buildx
 sudo systemctl enable --now docker.service
 sudo usermod -a -G docker jole
 
@@ -79,7 +79,7 @@ if [ ! -e "/etc/modules-load.d/nct6775.conf" ]; then
 fi
 
 # Dotfiles
-sudo pacman -S --noconfirm stow
+sudo pacman -S --noconfirm --needed stow
 if [ ! -e "~/.dotfiles" ]; then
     git clone --recurse-submodules https://github.com/drjole/dotfiles ~/.dotfiles
     pushd ~/.dotfiles
@@ -90,7 +90,7 @@ if [ ! -e "~/.dotfiles" ]; then
 fi
 
 # reditus
-sudo pacman -S --noconfirm pre-commit mkcert postgresql keepassxc chromium
+sudo pacman -S --noconfirm --needed pre-commit mkcert postgresql keepassxc chromium
 
 # Firefox
 # Set `intl.regional_prefs.use_os_locales` to true to use german date formats in firefox while keeping language at english
