@@ -87,6 +87,9 @@ if [ ! -e "$HOME/.dotfiles" ]; then
 fi
 bat cache --build
 
+# Seamless login
+./seamless-login.sh
+
 # Services
 systemctl --user enable --now hyprpaper
 systemctl --user enable --now hyprpolkitagent
