@@ -48,6 +48,20 @@ if ! command -v yay >/dev/null 2>&1; then
     popd
 fi
 
+# Dotfiles
+sudo pacman -S --noconfirm --needed stow
+if [ ! -e "$HOME/.dotfiles" ]; then
+    git clone --recurse-submodules https://github.com/drjole/dotfiles "$HOME/.dotfiles"
+    pushd "$HOME/.dotfiles"
+    git remote set-url origin git@github.com:drjole/dotfiles.git
+    find . -mindepth 1 -maxdepth 1 -type d -not -name .git -printf "%f\n" | xargs -I {} mkdir -p "$HOME"/{}
+    stow .
+    popd
+fi
+
+# Seamless login
+./seamless-login.sh
+
 # Docker
 sudo pacman -S --noconfirm --needed docker docker-compose docker-buildx
 sudo systemctl enable --now docker.service
@@ -73,17 +87,6 @@ fi
 if [ ! -e "/etc/modules-load.d/nct6775.conf" ]; then
     echo nct6775 | sudo tee /etc/modules-load.d/nct6775.conf
     echo "options nct6775 force_id=0xd802" | sudo tee /etc/modprobe.d/nct6775.conf
-fi
-
-# Dotfiles
-sudo pacman -S --noconfirm --needed stow
-if [ ! -e "$HOME/.dotfiles" ]; then
-    git clone --recurse-submodules https://github.com/drjole/dotfiles "$HOME/.dotfiles"
-    pushd "$HOME/.dotfiles"
-    git remote set-url origin git@github.com:drjole/dotfiles.git
-    find . -mindepth 1 -maxdepth 1 -type d -not -name .git -printf "%f\n" | xargs -I {} mkdir -p "$HOME"/{}
-    stow .
-    popd
 fi
 
 # Shell
