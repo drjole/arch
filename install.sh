@@ -58,9 +58,16 @@ if [ ! -e "$HOME/.dotfiles" ]; then
     stow .
     popd
 fi
+bat cache --build
 
 # Seamless login
 ./seamless-login.sh
+
+# Services
+systemctl --user enable --now hyprpaper
+systemctl --user enable --now hyprpolkitagent
+systemctl --user enable --now hyprsunset
+systemctl --user enable --now waybar
 
 # Docker
 sudo pacman -S --noconfirm --needed docker docker-compose docker-buildx
