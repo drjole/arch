@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -e
+set -ex
 
 # Plymouth
 sudo pacman -S --noconfirm --needed plymouth
@@ -21,6 +21,7 @@ if ! grep -Eq '^HOOKS=.*plymouth' /etc/mkinitcpio.conf; then
   # Regenerate initramfs
   sudo mkinitcpio -P
 fi
+
 for entry in /boot/loader/entries/*.conf; do
   if [ -f "$entry" ]; then
     # Skip fallback entries
@@ -37,6 +38,7 @@ for entry in /boot/loader/entries/*.conf; do
     fi
   fi
 done
+
 sudo cp -r $HOME/.local/share/catppuccin-plymouth/themes/catppuccin-mocha/ /usr/share/plymouth/themes/
 sudo plymouth-set-default-theme -R catppuccin-mocha
 

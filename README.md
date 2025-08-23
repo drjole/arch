@@ -1,11 +1,4 @@
-# NEW
-
-- When asked for the initial GNOME keyring password, leave it empty in order for the keyring to be unlocked automatically on login.
-- Set `intl.regional_prefs.use_os_locales` to true to use german date formats in firefox while keeping language at english
-
 # Installation Guide
-
-The installation scripts are not idempotent and therefore produce different results if executed multiple times.
 
 ## Obtain the Arch ISO
 
@@ -47,120 +40,53 @@ Either plug in an Ethernet cable or connect to a WLAN using `iwctl` and by execu
 
 ```shell
 device list
+station wlan0 scan
 station wlan0 connect <SSID>
 exit
 ```
 
-## _Optional_: Enable SSH Access to the Live Environment
+## Install Arch Linux
 
-Enable the sshd service and set a password for the root user:
+Use the `archinstall` command to install Arch. Make sure to select/set the following installation options:
+
+- Mirrors and repositories: Germany
+- Disk configuration: Use the default partitioning layout for your main disk
+- Disk > File system: Choose btrfs with default structure and compression enabled
+- Disk > Disk encryption: Enable LUKS encryption, set a password and select the main partition to enable the encryption of it
+- Hostname: Set a hostname
+- Authentication > Root password: Set a password
+- Authentication > User account: Add your user and make sure to make it a super user
+- Applications > Audio: Choose pipewire
+- Network configuration: Choose to copy from ISO
+- Timezone: Europe/Berlin
+
+Now start the installation with the configured options.
+After the installation is done, reboot the system.
+
+## Run the installation scripts
+
+Inside the newly booted system, run this command to obtain the installation scripts:
 
 ```shell
-systemctl start sshd
-passwd root
+git clone https://github.com/drjole/arch.git
 ```
 
-Connect to the machine using SSH from another machine. Use `ip addr` to get the IP address of the machine.
-
-Continue the rest of this guide using SSH from your other machine and run the commands over SSH.
-Don't forget to reconnect after a reboot.
-
-## Partition the Disks
-
-Use `lsblk` to identify your disks.
-
-After reading the [Arch Wiki page](https://wiki.archlinux.org/title/Partitioning), decide on a partition layout and apply it using `gdisk`.
-
-These are my partition layouts:
-
-### jolepc
-
-#### `/dev/nvme0n1` (Root and Home Partition)
-
-| Partition | First Sector | Last Sector | `gdisk` Code | Comment            |
-| --------- | ------------ | ----------- | ------------ | ------------------ |
-| 1         | default      | +512M       | EF00         | EFI (/boot)        |
-| 2         | default      | default     | 8309         | / (LUKS encrypted) |
-
-#### `/dev/sda` (General Purpose SDD)
-
-| Partition | First Sector | Last Sector | `gdisk` Code | Comment        |
-| --------- | ------------ | ----------- | ------------ | -------------- |
-| 1         | default      | default     | 8300         | Arbitrary Data |
-
-#### `/dev/sdb` (General Purpose HDD)
-
-| Partition | First Sector | Last Sector | `gdisk` Code | Comment        |
-| --------- | ------------ | ----------- | ------------ | -------------- |
-| 1         | default      | default     | 8300         | Arbitrary Data |
-
-### jolelaptop
-
-#### `/dev/nvme0n1` (Root and Home Partition)
-
-| Partition | First Sector | Last Sector | `gdisk` Code | Comment            |
-| --------- | ------------ | ----------- | ------------ | ------------------ |
-| 1         | default      | +512M       | EF00         | EFI (/boot)        |
-| 2         | default      | default     | 8309         | / (LUKS encrypted) |
-
-## Obtain the installation scripts
-
-The easiest way to obtain the scripts is by installing Git in the live environment and cloning this repository:
+Change into the cloned directory and adjust the values in `config.sh` as needed:
 
 ```shell
-pacman-key --init
-pacman -Sy git
-git clone https://github.com/drjole/arch
 cd arch
+# Edit `config.sh`...
 ```
 
-## Install the Base System
-
-Adjust the values in `00_config.sh`.
-
-Then run the install script:
+Finally, run the installation script. You will be asked for your password for `sudo`:
 
 ```shell
-./10-install.sh
+./install.sh
 ```
 
-After this script has finished executing, reboot:
+# Additional Notes
 
-```shell
-reboot
-```
-
-Select the newly installed system in GRUB, log in using your defined credentials.
-
-If GRUB is not shown, refer to [this article](https://wiki.archlinux.org/title/GRUB/EFI_examples#MSI) for help.
-
-Again, obtain the install scripts:
-
-```shell
-git clone https://github.com/drjole/arch
-cd arch
-```
-
-The values in `00_config.sh` can be left unchanged as they are not needed for the post-install scripts.
-
-**Only run scripts as your newly created user from now on! The scripts might ask you for the sudo password.**
-
-Execute the post-install script:
-
-```shell
-./20-post-install.sh
-```
-
-Log out of the system:
-
-```shell
-exit
-```
-
-## Additional Steps
-
+- When asked for the initial GNOME keyring password, leave it empty in order for the keyring to be unlocked automatically on login.
+- In Firefox, set `intl.regional_prefs.use_os_locales` to `true` in `about:config` in order to use german date formats in Firefox while keeping language at English.
 - Add previous SSH keys.
-  - Make sure to `chmod 600` the private key.
-- Change origin of dotfiles repository to use SSH.
-- Setup catppuccin in Firefox using [this](https://github.com/catppuccin/firefox). I use the lavender flavor.
-- Setup catppuccin in Dark Reader using [this](https://github.com/catppuccin/dark-reader).
+- Make sure to `chmod 600` the private key.

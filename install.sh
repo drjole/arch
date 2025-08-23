@@ -1,46 +1,61 @@
 #!/bin/bash
 
-set -e
+set -ex
+
+# Load configuration variables
+. config.sh
 
 # Locales
-if grep -q '^#.*en_US\.UTF-8' /etc/locale.gen; then
+if grep -q '^#.*en_US\.UTF-8' /etc/locale.gen>/dev/null 2>&1; then
     sudo sed -i 's/^# *\(en_US\.UTF-8.*\)/\1/' /etc/locale.gen
     sudo locale-gen
 fi
-if grep -q '^#.*de_DE\.UTF-8' /etc/locale.gen; then
+if grep -q '^#.*de_DE\.UTF-8' /etc/locale.gen>/dev/null 2>&1; then
     sudo sed -i 's/^# *\(de_DE\.UTF-8.*\)/\1/' /etc/locale.gen
     sudo locale-gen
 fi
 
 # Configure pacman
 # Enable multilib repository
-if ! grep -q "^\[multilib\]" /etc/pacman.conf; then
+if ! grep -q "^\[multilib\]" /etc/pacman.conf>/dev/null 2>&1; then
     sudo sed -i '/^#\[multilib\]/,/^#Include/ s/^#//' /etc/pacman.conf
 fi
-if ! grep -q '^Color' /etc/pacman.conf; then
+# Fancy stuff
+if ! grep -q '^Color' /etc/pacman.conf>/dev/null 2>&1; then
     sudo sed -i '/^\[options\]/a Color' /etc/pacman.conf
 fi
-if ! grep -q '^ILoveCandy' /etc/pacman.conf; then
+if ! grep -q '^ILoveCandy' /etc/pacman.conf>/dev/null 2>&1; then
     sudo sed -i '/^\[options\]/a ILoveCandy' /etc/pacman.conf
 fi
 
 # Configure makepkg
-if grep -q '^MAKEFLAGS=' /etc/makepkg.conf; then
+if grep -q '^MAKEFLAGS=' /etc/makepkg.conf>/dev/null 2>&1; then
     sudo sed -i "s/^MAKEFLAGS=.*/MAKEFLAGS=\"-j\$(nproc)\"/" /etc/makepkg.conf
 else
     echo "MAKEFLAGS=\"-j\$(nproc)\"" | sudo tee -a /etc/makepkg.conf
 fi
 
+# Update the system
+sudo pacman -Syu --noconfirm
+
 # Install all the packages
-sudo pacman -Syu --noconfirm --needed \
-    base-devel git \
-    mesa lib32-mesa vulkan-radeon lib32-vulkan-radeon \
-    pipewire pipewire-audio pipewire-alsa pipewire-pulse pipewire-jack wireplumber \
-    hyprland uwsm libnewt xdg-desktop-portal-hyprland xdg-desktop-portal-gtk hyprpolkitagent hypridle hyprpaper waybar rofi dunst hyprlock wl-clipboard hyprsunset grim slurp qt5-wayland qt6-wayland \
-    brightnessctl alacritty firefox nautilus sushi ffmpegthumbnailer spotify-launcher discord pavucontrol gimp inkscape libreoffice-still nextcloud-client signal-desktop vlc zathura zathura-pdf-poppler xournalppsteam teamspeak3 gnome-keyring \
-    gnome-themes-extra \
-    noto-fonts noto-fonts-cjk noto-fonts-emoji ttf-jetbrains-mono-nerd ttf-font-awesome otf-font-awesome \
-    kvantum-qt5 \
+# Always needed
+sudo pacman -S --noconfirm --needed base-devel git
+# Graphics
+sudo pacman -S --noconfirm --needed mesa lib32-mesa vulkan-radeon lib32-vulkan-radeon
+# Audio
+sudo pacman -S --noconfirm --needed pipewire pipewire-audio pipewire-alsa pipewire-pulse pipewire-jack wireplumber
+# Hyprland
+sudo pacman -S --noconfirm --needed hyprland uwsm libnewt xdg-desktop-portal-hyprland xdg-desktop-portal-gtk \
+    hyprpolkitagent hypridle hyprpaper waybar rofi dunst hyprlock wl-clipboard hyprsunset grim slurp qt5-wayland qt6-wayland
+# Desktop applications
+sudo pacman -S --noconfirm --needed alacritty firefox nautilus sushi ffmpegthumbnailer spotify-launcher discord pavucontrol \
+    gimp inkscape libreoffice-still nextcloud-client gnome-keyring signal-desktop vlc xournalpp steam teamspeak3 brightnessctl
+# Theming
+sudo pacman -S --noconfirm --needed gnome-themes-extra kvantum-qt5 \
+    noto-fonts noto-fonts-cjk noto-fonts-emoji ttf-jetbrains-mono-nerd ttf-font-awesome otf-font-awesome
+# Terminal applications
+sudo pacman -S --noconfirm --needed zathura zathura-pdf-poppler \
     zsh zsh-autosuggestions zsh-completions zsh-syntax-highlighting \
     neovim fzf starship eza bat htop tmux ddcutil man-db ripgrep fd lazygit jq unzip \
     pacman-contrib
@@ -53,41 +68,45 @@ if ! command -v yay >/dev/null 2>&1; then
     popd
 fi
 
-# Configure dconf to use a text-based file
-sudo mkdir -p /etc/dconf/profile
-echo "service-db:keyfile/user" | sudo tee -a /etc/dconf/profile/user
-
 # Dotfiles
 sudo pacman -S --noconfirm --needed stow
-if [ ! -e "$HOME/.dotfiles" ]; then
-    git clone --recurse-submodules https://github.com/drjole/dotfiles "$HOME/.dotfiles"
+if [ ! -d "$HOME/.dotfiles" ]; then
+    git clone --recurse-submodules "https://$DOTFILES_URL" "$HOME/.dotfiles"
+else
     pushd "$HOME/.dotfiles"
-    git remote set-url origin git@github.com:drjole/dotfiles.git
-    find . -mindepth 1 -maxdepth 1 -type d -not -name .git -printf "%f\n" | xargs -I {} mkdir -p "$HOME"/{}
-    stow .
+    git remote set-url origin "$DOTFILES_URL_HTTPS"
+    git pull --recurse-submodules
     popd
 fi
+pushd "$HOME/.dotfiles"
+git remote set-url origin "$DOTFILES_URL_SSH"
+find . -mindepth 1 -maxdepth 1 -type d -not -name .git -printf "%f\n" | xargs -I {} mkdir -p "$HOME"/{}
+stow .
+popd
 bat cache --build
 
-# Seamless login
-./seamless-login.sh
+# Shell
+if [ "$SHELL" != "/bin/zsh" ]; then
+    sudo chsh --shell /bin/zsh "$USER_NAME"
+fi
+
+# Configure dconf to use a text-based file
+if ! grep -q "service-db:keyfile/user" /etc/dconf/profile/user>/dev/null 2>&1; then
+    sudo mkdir -p /etc/dconf/profile
+    echo "service-db:keyfile/user" | sudo tee /etc/dconf/profile/user
+fi
+
+# Configure seamless login
+. seamless-login.sh
 
 # Don't require network interfaces to be routable for boot
-sudo systemctl disable --now systemd-networkd-wait-online
-
-# Services
-systemctl --user enable --now hyprpaper
-systemctl --user enable --now hyprpolkitagent
-systemctl --user enable --now hyprsunset
-systemctl --user enable --now waybar
+sudo systemctl disable systemd-networkd-wait-online.service
+sudo systemctl mask systemd-networkd-wait-online.service
 
 # Docker
 sudo pacman -S --noconfirm --needed docker docker-compose docker-buildx
-sudo systemctl enable --now docker.service
-sudo usermod -a -G docker jole
-
-# Shell
-sudo chsh --shell /bin/zsh jole
+sudo systemctl enable docker.service
+sudo usermod -a -G docker "$USER_NAME"
 
 # Theming
 yay -S --noconfirm --needed yaru-icon-theme
@@ -97,7 +116,7 @@ gsettings set org.gnome.desktop.interface icon-theme "Yaru-purple-dark"
 
 # Bluetooth
 sudo pacman -S --noconfirm --needed blueman bluez bluez-utils
-sudo systemctl enable --now bluetooth.service
+sudo systemctl enable bluetooth.service
 
 # Development environments
 sudo pacman -S --noconfirm --needed mise
@@ -108,3 +127,9 @@ mise use -g ruby
 
 # reditus
 sudo pacman -S --noconfirm --needed pre-commit mkcert postgresql keepassxc chromium
+
+# Make sure the initramfs is rebuilt at least once after the installation
+sudo mkinitcpio -P
+
+# Done
+echo "All done! Now reboot and enjoy."

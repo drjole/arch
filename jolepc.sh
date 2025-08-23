@@ -3,7 +3,7 @@
 set -e
 
 # Brightness control
-sudo usermod -aG i2c jole
+sudo usermod -aG i2c "$USER_NAME"
 if [ ! -e "/etc/modules-load.d/ic2-dev.conf" ]; then
     cat <<EOF | sudo tee /etc/modules-load.d/i2c-dev.conf >/dev/null
 i2c-dev
