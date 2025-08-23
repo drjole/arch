@@ -1,3 +1,8 @@
+# NEW
+
+- When asked for the initial GNOME keyring password, leave it empty in order for the keyring to be unlocked automatically on login.
+- Set `intl.regional_prefs.use_os_locales` to true to use german date formats in firefox while keeping language at english
+
 # Installation Guide
 
 The installation scripts are not idempotent and therefore produce different results if executed multiple times.

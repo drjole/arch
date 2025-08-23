@@ -17,8 +17,12 @@ fi
 if ! grep -q "^\[multilib\]" /etc/pacman.conf; then
     sudo sed -i '/^#\[multilib\]/,/^#Include/ s/^#//' /etc/pacman.conf
 fi
-grep -q '^Color' /etc/pacman.conf || sudo sed -i '/^\[options\]/a Color' /etc/pacman.conf
-grep -q '^ILoveCandy' /etc/pacman.conf || sudo sed -i '/^\[options\]/a ILoveCandy' /etc/pacman.conf
+if ! grep -q '^Color' /etc/pacman.conf; then
+    sudo sed -i '/^\[options\]/a Color' /etc/pacman.conf
+fi
+if ! grep -q '^ILoveCandy' /etc/pacman.conf; then
+    sudo sed -i '/^\[options\]/a ILoveCandy' /etc/pacman.conf
+fi
 
 # Configure makepkg
 if grep -q '^MAKEFLAGS=' /etc/makepkg.conf; then
@@ -32,12 +36,13 @@ sudo pacman -Syu --noconfirm --needed \
     base-devel git \
     mesa lib32-mesa vulkan-radeon lib32-vulkan-radeon \
     pipewire pipewire-audio pipewire-alsa pipewire-pulse pipewire-jack wireplumber \
-    hyprland uwsm libnewt xdg-desktop-portal-hyprland hyprpolkitagent hyprpaper waybar rofi dunst hyprlock wl-clipboard hyprsunset grim slurp qt5-wayland qt6-wayland \
-    noto-fonts noto-fonts-emoji ttf-jetbrains-mono-nerd ttf-font-awesome otf-font-awesome \
-    alacritty firefox thunar spotify-launcher discord pavucontrol gimp inkscape libreoffice-still nextcloud-client signal-desktop vlc zathura zathura-pdf-poppler steam teamspeak3 gnome-keyring \
-    qt5ct qt6ct kvantum breeze-icons \
+    hyprland uwsm libnewt xdg-desktop-portal-hyprland xdg-desktop-portal-gtk hyprpolkitagent hypridle hyprpaper waybar rofi dunst hyprlock wl-clipboard hyprsunset grim slurp qt5-wayland qt6-wayland \
+    brightnessctl alacritty firefox nautilus sushi ffmpegthumbnailer spotify-launcher discord pavucontrol gimp inkscape libreoffice-still nextcloud-client signal-desktop vlc zathura zathura-pdf-poppler xournalppsteam teamspeak3 gnome-keyring \
+    gnome-themes-extra \
+    noto-fonts noto-fonts-cjk noto-fonts-emoji ttf-jetbrains-mono-nerd ttf-font-awesome otf-font-awesome \
+    kvantum-qt5 \
     zsh zsh-autosuggestions zsh-completions zsh-syntax-highlighting \
-    neovim fzf starship eza bat htop tmux ddcutil man-db ripgrep fd lazygit jq \
+    neovim fzf starship eza bat htop tmux ddcutil man-db ripgrep fd lazygit jq unzip \
     pacman-contrib
 
 # yay
@@ -47,6 +52,10 @@ if ! command -v yay >/dev/null 2>&1; then
     makepkg -si
     popd
 fi
+
+# Configure dconf to use a text-based file
+sudo mkdir -p /etc/dconf/profile
+echo "service-db:keyfile/user" | sudo tee -a /etc/dconf/profile/user
 
 # Dotfiles
 sudo pacman -S --noconfirm --needed stow
@@ -63,6 +72,9 @@ bat cache --build
 # Seamless login
 ./seamless-login.sh
 
+# Don't require network interfaces to be routable for boot
+sudo systemctl disable --now systemd-networkd-wait-online
+
 # Services
 systemctl --user enable --now hyprpaper
 systemctl --user enable --now hyprpolkitagent
@@ -74,33 +86,14 @@ sudo pacman -S --noconfirm --needed docker docker-compose docker-buildx
 sudo systemctl enable --now docker.service
 sudo usermod -a -G docker jole
 
-# Configure PAM for GNOME Keyring unlocking
-if ! grep -q '^auth \+optional \+pam_gnome_keyring.so' /etc/pam.d/login; then
-    sudo sed -i '/^account/ i auth       optional     pam_gnome_keyring.so' /etc/pam.d/login
-fi
-if ! grep -q '^session \+optional \+pam_gnome_keyring.so auto_start' /etc/pam.d/login; then
-    sudo sed -i '/^password/ i session    optional     pam_gnome_keyring.so auto_start' /etc/pam.d/login
-fi
-
-# Brightness control
-sudo usermod -aG i2c jole
-if [ ! -e "/etc/modules-load.d/ic2-dev.conf" ]; then
-    cat <<EOF | sudo tee /etc/modules-load.d/i2c-dev.conf >/dev/null
-i2c-dev
-EOF
-fi
-
-# Sensors
-if [ ! -e "/etc/modules-load.d/nct6775.conf" ]; then
-    echo nct6775 | sudo tee /etc/modules-load.d/nct6775.conf
-    echo "options nct6775 force_id=0xd802" | sudo tee /etc/modprobe.d/nct6775.conf
-fi
-
 # Shell
 sudo chsh --shell /bin/zsh jole
 
 # Theming
-yay -S --noconfirm --needed catppuccin-gtk-theme-mocha catppuccin-cursors-mocha yaru-icon-theme
+yay -S --noconfirm --needed yaru-icon-theme
+gsettings set org.gnome.desktop.interface color-scheme "prefer-dark"
+gsettings set org.gnome.desktop.interface gtk-theme "Adwaita-dark"
+gsettings set org.gnome.desktop.interface icon-theme "Yaru-purple-dark"
 
 # Bluetooth
 sudo pacman -S --noconfirm --needed blueman bluez bluez-utils
@@ -115,6 +108,3 @@ mise use -g ruby
 
 # reditus
 sudo pacman -S --noconfirm --needed pre-commit mkcert postgresql keepassxc chromium
-
-# Firefox
-# Set `intl.regional_prefs.use_os_locales` to true to use german date formats in firefox while keeping language at english
