@@ -64,9 +64,10 @@ After the installation is done, reboot the system.
 
 ## Run the installation scripts
 
-Inside the newly booted system, run this command to obtain the installation scripts:
+Inside the newly booted system, run these commands to obtain the installation scripts:
 
 ```shell
+sudo pacman -S git neovim
 git clone https://github.com/drjole/arch.git
 ```
 
