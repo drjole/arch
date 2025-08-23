@@ -56,7 +56,6 @@ Use the `archinstall` command to install Arch. Make sure to select/set the follo
 - Hostname: Set a hostname
 - Authentication > Root password: Set a password
 - Authentication > User account: Add your user and make sure to make it a super user
-- Applications > Audio: Choose pipewire
 - Network configuration: Choose to copy from ISO
 - Timezone: Europe/Berlin
 
