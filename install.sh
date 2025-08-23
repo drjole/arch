@@ -71,7 +71,7 @@ fi
 # Dotfiles
 sudo pacman -S --noconfirm --needed stow
 if [ ! -d "$HOME/.dotfiles" ]; then
-    git clone --recurse-submodules "https://$DOTFILES_URL" "$HOME/.dotfiles"
+    git clone --recurse-submodules "$DOTFILES_URL_HTTPS" "$HOME/.dotfiles"
 else
     pushd "$HOME/.dotfiles"
     git remote set-url origin "$DOTFILES_URL_HTTPS"
@@ -109,7 +109,7 @@ sudo systemctl enable docker.service
 sudo usermod -a -G docker "$USER_NAME"
 
 # Theming
-yay -S --noconfirm --needed yaru-icon-theme
+yay -S --noconfirm --needed --answerdiff N yaru-icon-theme bibata-cursor-theme-bin
 gsettings set org.gnome.desktop.interface color-scheme "prefer-dark"
 gsettings set org.gnome.desktop.interface gtk-theme "Adwaita-dark"
 gsettings set org.gnome.desktop.interface icon-theme "Yaru-purple-dark"
