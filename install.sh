@@ -109,7 +109,8 @@ sudo systemctl enable docker.service
 sudo usermod -a -G docker "$USER_NAME"
 
 # Theming
-yay -S --noconfirm --needed --answerdiff N yaru-icon-theme bibata-cursor-theme-bin
+yay -S --noconfirm --needed --answerdiff N bibata-cursor-theme-bin
+yay -S --noconfirm --needed --answerdiff N yaru-icon-theme
 gsettings set org.gnome.desktop.interface color-scheme "prefer-dark"
 gsettings set org.gnome.desktop.interface gtk-theme "Adwaita-dark"
 gsettings set org.gnome.desktop.interface icon-theme "Yaru-purple-dark"
