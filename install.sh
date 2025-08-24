@@ -81,7 +81,8 @@ fi
 pushd "$HOME/.dotfiles"
 git remote set-url origin "$DOTFILES_URL_SSH"
 find . -mindepth 1 -maxdepth 1 -type d -not -name .git -printf "%f\n" | xargs -I {} mkdir -p "$HOME"/{}
-stow .
+stow shared
+stow "$HOST"
 popd
 bat cache --build
 
@@ -121,7 +122,7 @@ sudo systemctl enable bluetooth.service
 
 # Development environments
 sudo pacman -S --noconfirm --needed mise
-mise trust "$HOME/.dotfiles/.config/mise/config.toml"
+mise trust "$HOME/.dotfiles/shared/.config/mise/config.toml"
 mise use -g usage
 mise use -g node
 mise use -g ruby
