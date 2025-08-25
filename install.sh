@@ -2,6 +2,8 @@
 
 set -ex
 
+INSTALLATION_DIRECTORY=$(pwd)
+
 # Load configuration variables
 . config.sh
 
@@ -58,14 +60,14 @@ sudo pacman -S --noconfirm --needed gnome-themes-extra kvantum-qt5 \
 sudo pacman -S --noconfirm --needed zathura zathura-pdf-poppler \
     zsh zsh-autosuggestions zsh-completions zsh-syntax-highlighting \
     neovim fzf starship eza bat htop tmux ddcutil man-db ripgrep fd lazygit jq unzip \
-    pacman-contrib
+    pacman-contrib inetutils
 
 # yay
 if ! command -v yay >/dev/null 2>&1; then
     git clone https://aur.archlinux.org/yay.git /tmp/yay
-    pushd /tmp/yay
+    cd /tmp/yay
     makepkg -si
-    popd
+    cd "$INSTALLATION_DIRECTORY"
 fi
 
 # Dotfiles
@@ -73,17 +75,17 @@ sudo pacman -S --noconfirm --needed stow
 if [ ! -d "$HOME/.dotfiles" ]; then
     git clone --recurse-submodules "$DOTFILES_URL_HTTPS" "$HOME/.dotfiles"
 else
-    pushd "$HOME/.dotfiles"
+    cd "$HOME/.dotfiles"
     git remote set-url origin "$DOTFILES_URL_HTTPS"
     git pull --recurse-submodules
-    popd
+    cd "$INSTALLATION_DIRECTORY"
 fi
-pushd "$HOME/.dotfiles"
+cd "$HOME/.dotfiles"
 git remote set-url origin "$DOTFILES_URL_SSH"
 find . -mindepth 1 -maxdepth 1 -type d -not -name .git -printf "%f\n" | xargs -I {} mkdir -p "$HOME"/{}
 stow shared
-stow "$HOST"
-popd
+stow $(hostname)
+cd "$INSTALLATION_DIRECTORY"
 bat cache --build
 
 # Shell
