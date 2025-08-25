@@ -52,14 +52,14 @@ sudo pacman -S --noconfirm --needed hyprland uwsm libnewt xdg-desktop-portal-hyp
     hyprpolkitagent hypridle hyprpaper waybar rofi dunst hyprlock wl-clipboard hyprsunset grim slurp qt5-wayland qt6-wayland
 # Desktop applications
 sudo pacman -S --noconfirm --needed alacritty firefox nautilus sushi ffmpegthumbnailer spotify-launcher discord pavucontrol \
-    gimp inkscape libreoffice-still nextcloud-client gnome-keyring signal-desktop vlc xournalpp steam teamspeak3 brightnessctl
+    gimp inkscape libreoffice-still nextcloud-client gnome-keyring signal-desktop vlc xournalpp steam teamspeak3
 # Theming
 sudo pacman -S --noconfirm --needed gnome-themes-extra kvantum-qt5 \
     noto-fonts noto-fonts-cjk noto-fonts-emoji ttf-jetbrains-mono-nerd ttf-font-awesome otf-font-awesome
 # Terminal applications
 sudo pacman -S --noconfirm --needed zathura zathura-pdf-poppler \
     zsh zsh-autosuggestions zsh-completions zsh-syntax-highlighting \
-    neovim fzf starship eza bat htop tmux ddcutil man-db ripgrep fd lazygit jq unzip \
+    neovim fzf starship eza bat htop tmux man-db ripgrep fd lazygit jq unzip \
     pacman-contrib inetutils
 
 # yay
@@ -134,6 +134,8 @@ sudo pacman -S --noconfirm --needed pre-commit mkcert postgresql keepassxc chrom
 
 # Make sure the initramfs is rebuilt at least once after the installation
 sudo mkinitcpio -P
+
+. "$(hostname).sh"
 
 # Done
 echo "All done! Now reboot and enjoy."
