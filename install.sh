@@ -83,8 +83,13 @@ fi
 cd "$HOME/.dotfiles"
 git remote set-url origin "$DOTFILES_URL_SSH"
 find . -mindepth 1 -maxdepth 1 -type d -not -name .git -printf "%f\n" | xargs -I {} mkdir -p "$HOME"/{}
+# Ensure that these directories exist so that stow puts the symlinks inside them instead of using themselves as symlink targets
+mkdir -p "$HOME/.config"
+mkdir -p "$HOME/.local/bin"
+mkdir -p "$HOME/.local/share"
+mkdir -p "$HOME/.ssh"
 stow shared
-stow $(hostname)
+stow "$(hostname)"
 cd "$INSTALLATION_DIRECTORY"
 bat cache --build
 
