@@ -52,7 +52,7 @@ sudo pacman -S --noconfirm --needed hyprland uwsm libnewt xdg-desktop-portal-hyp
     hyprpolkitagent hypridle hyprpaper waybar rofi dunst hyprlock wl-clipboard hyprsunset grim slurp qt5-wayland qt6-wayland
 # Desktop applications
 sudo pacman -S --noconfirm --needed alacritty firefox nautilus sushi ffmpegthumbnailer spotify-launcher discord pavucontrol \
-    gimp inkscape libreoffice-still nextcloud-client gnome-keyring signal-desktop vlc xournalpp steam teamspeak3
+    gimp inkscape loupe libreoffice-still nextcloud-client gnome-keyring signal-desktop vlc xournalpp steam teamspeak3
 # Theming
 sudo pacman -S --noconfirm --needed gnome-themes-extra kvantum-qt5 \
     noto-fonts noto-fonts-cjk noto-fonts-emoji ttf-jetbrains-mono-nerd ttf-font-awesome otf-font-awesome
