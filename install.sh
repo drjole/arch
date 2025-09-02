@@ -66,7 +66,7 @@ sudo pacman -S --noconfirm --needed zathura zathura-pdf-poppler \
 if ! command -v yay >/dev/null 2>&1; then
     git clone https://aur.archlinux.org/yay.git /tmp/yay
     cd /tmp/yay
-    makepkg -si
+    makepkg -si --noconfirm
     cd "$INSTALLATION_DIRECTORY"
 fi
 
@@ -89,7 +89,9 @@ mkdir -p "$HOME/.local/bin"
 mkdir -p "$HOME/.local/share"
 mkdir -p "$HOME/.ssh"
 stow shared
-stow "$(hostname)"
+if [[ -d "$(hostname)" ]]; then
+    stow "$(hostname)"
+fi
 cd "$INSTALLATION_DIRECTORY"
 bat cache --build
 
@@ -143,7 +145,10 @@ sudo pacman -S --noconfirm --needed pre-commit mkcert postgresql keepassxc chrom
 # Make sure the initramfs is rebuilt at least once after the installation
 sudo mkinitcpio -P
 
-. "$(hostname).sh"
+# Run host-specific configuration script
+if [[ -x "$(hostname).sh" ]]; then
+    . "$(hostname).sh"
+fi
 
 # Done
 echo "All done! Now reboot and enjoy."

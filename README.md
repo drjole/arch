@@ -78,7 +78,14 @@ cd arch
 # Edit `config.sh`...
 ```
 
-Finally, run the installation script. You will be asked for your password for `sudo`:
+If you want to run additional host-specific configuration, add a `$(hostname).sh` script.
+It will be executed at the end of the installation script.
+
+Also, if you want to add host-specific dotfiles, add a `$(hostname)` directory in your dotfiles repository.
+It will be stowed when dotfiles are being installed.
+
+Finally, run the installation script.
+You will be asked for your password for `sudo` three times: Once at the beginning of the installation and then twice again when `yay` is being installed.
 
 ```shell
 ./install.sh
