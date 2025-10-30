@@ -61,6 +61,8 @@ sudo pacman -S --noconfirm --needed zathura zathura-pdf-poppler \
     zsh zsh-autosuggestions zsh-completions zsh-syntax-highlighting \
     neovim fzf starship eza bat htop tmux man-db ripgrep fd lazygit jq unzip \
     pacman-contrib inetutils git-filter-repo
+# Programming tools
+sudo pacman -S --noconfirm --needed mdformat mdformat-tables
 
 # yay
 if ! command -v yay >/dev/null 2>&1; then
