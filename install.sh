@@ -90,6 +90,8 @@ git remote set-url origin "$DOTFILES_URL_SSH"
 mkdir -p "$HOME/.config"
 mkdir -p "$HOME/.local/bin"
 mkdir -p "$HOME/.local/share"
+mkdir -p "$HOME/.local/share/applications"
+mkdir -p "$HOME/.local/share/applications/icons"
 mkdir -p "$HOME/.ssh"
 stow shared
 if [[ -d "$(hostname)" ]]; then
