@@ -53,7 +53,6 @@ sudo pacman -S --noconfirm --needed hyprland uwsm libnewt xdg-desktop-portal-hyp
 # Desktop applications
 sudo pacman -S --noconfirm --needed alacritty firefox nautilus sushi ffmpegthumbnailer spotify-launcher discord pavucontrol \
     gimp inkscape loupe libreoffice-still nextcloud-client gnome-keyring signal-desktop vlc vlc-plugin-ffmpeg vlc-plugin-gstreamer xournalpp steam teamspeak3
-yay -S --noconfirm --needed localsend safeeyes
 # Theming
 sudo pacman -S --noconfirm --needed gnome-themes-extra kvantum-qt5 \
     noto-fonts noto-fonts-cjk noto-fonts-emoji ttf-jetbrains-mono-nerd ttf-font-awesome otf-font-awesome
@@ -73,6 +72,9 @@ if ! command -v yay >/dev/null 2>&1; then
     makepkg -si --noconfirm
     cd "$INSTALLATION_DIRECTORY"
 fi
+
+# Install yay applications
+yay -S --noconfirm --needed localsend
 
 # Dotfiles
 sudo pacman -S --noconfirm --needed stow
