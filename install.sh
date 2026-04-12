@@ -59,7 +59,7 @@ sudo pacman -S --noconfirm --needed gnome-themes-extra kvantum-qt5 \
 # Terminal applications
 sudo pacman -S --noconfirm --needed zathura zathura-pdf-poppler \
     zsh zsh-autosuggestions zsh-completions zsh-syntax-highlighting \
-    neovim fzf starship eza bat htop tmux man-db ripgrep fd lazygit jq unzip \
+    neovim tree-sitter-cli fzf starship eza bat htop tmux man-db ripgrep fd lazygit jq unzip \
     pacman-contrib inetutils git-filter-repo \
     impala
 # Programming tools
